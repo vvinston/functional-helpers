@@ -15,6 +15,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         this.numberOfPossibleRetries = numberOfPossibleRetries;
     }
 
+    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
     public R apply(final T input) {
         final List<RuntimeException> exceptions = new ArrayList<>();
@@ -23,8 +24,8 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         do {
             try {
                 return function.apply(input);
-            } catch (final RuntimeException e) {
-                exceptions.add(e);
+            } catch (final RuntimeException exception) {
+                exceptions.add(exception);
                 numberOfAttempts++;
             }
         } while (numberOfAttempts < numberOfPossibleRetries);

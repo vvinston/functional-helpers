@@ -22,7 +22,7 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
         return predicate.test(input) ? success.apply(input) : fail.apply(input);
     }
 
-    public static <T> ConditionalFunctionBuilderStepOne<T> when (final Predicate<T> predicate) {
+    public static <T> ConditionalFunctionBuilderStepOne<T> when(final Predicate<T> predicate) {
         return new ConditionalFunctionBuilderStepOne<>(predicate);
     }
 
@@ -34,6 +34,7 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
             this.predicate = predicate;
         }
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         public <R> ConditionalFunctionBuilderStepTwo<T, R> then(final Function<T, R> success) {
             return new ConditionalFunctionBuilderStepTwo<>(predicate, success);
         }

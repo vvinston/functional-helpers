@@ -7,11 +7,11 @@ import java.util.function.Predicate;
 
 public class ConditionalFunctionTest {
 
-    final Predicate<Boolean> predicate = condition -> condition;
+    private final Predicate<Boolean> predicate = condition -> condition;
 
-    final Function<Boolean, String> success = input -> "success";
+    private final Function<Boolean, String> success = input -> "success";
 
-    final Function<Boolean, String> fail = input -> "fail";
+    private final Function<Boolean, String> fail = input -> "fail";
 
     @Test
     public void testHappyPath() {

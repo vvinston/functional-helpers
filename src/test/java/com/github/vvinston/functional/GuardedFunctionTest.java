@@ -6,15 +6,15 @@ import java.util.function.Function;
 
 public class GuardedFunctionTest {
 
-    final Class<? extends RuntimeException> clazz = IllegalArgumentException.class;
+    private final Class<? extends RuntimeException> clazz = IllegalArgumentException.class;
 
-    final Function<Boolean, String> success1 = input -> "success";
+    private final Function<Boolean, String> success1 = input -> "success";
 
-    final Function<Boolean, String> success2 = input -> {throw new IllegalArgumentException("x");};
+    private final Function<Boolean, String> success2 = input -> { throw new IllegalArgumentException("x"); };
 
-    final Function<Boolean, String> success3 = input -> {throw new NullPointerException("y");};
+    private final Function<Boolean, String> success3 = input -> { throw new NullPointerException("y"); };
 
-    final Function<Boolean, String> fallback = input -> "fallback";
+    private final Function<Boolean, String> fallback = input -> "fallback";
 
     @Test
     public void testSuccess() {

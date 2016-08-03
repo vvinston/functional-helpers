@@ -9,7 +9,21 @@
     <version>0.1-SNAPSHOT</version>
 
     <properties>
-        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version.source>1.8</java.version.source>
+        <java.version.target>1.8</java.version.target>
+        <codequality.directory>${basedir}/codequality</codequality.directory>
+
+        <!-- Plugin properties -->
+        <plugin.compiler.version>3.5.1</plugin.compiler.version>
+        <plugin.pmd.version>3.6</plugin.pmd.version>
+        <plugin.pmd.ruleset.path>${codequality.directory}/pmd-rules.xml</plugin.pmd.ruleset.path>
+        <plugin.checkstyle.version>2.17</plugin.checkstyle.version>
+        <plugin.checkstyle.configuration>${codequality.directory}/checkstyle-configuration.xml</plugin.checkstyle.configuration>
+        <plugin.checkstyle.suppressions>${codequality.directory}/checkstyle-suppressions.xml</plugin.checkstyle.suppressions>
+
+        <!-- Dependency properties -->
         <junit.version>4.11</junit.version>
     </properties>
 
@@ -24,13 +38,73 @@
 
     <build>
         <plugins>
+            <!-- Compile plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>${plugin.compiler.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${java.version.source}</source>
+                    <target>${java.version.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- PMD plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${plugin.pmd.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>pmd-check</id>
+
+                        <goals>
+                            <goal>check</goal>
+                            <goal>cpd-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <rulesets>
+                        <ruleset>${plugin.pmd.ruleset.path}</ruleset>
+                    </rulesets>
+                    <targetJdk>${java.version.target}</targetJdk>
+                    <failOnViolation>true</failOnViolation>
+                    <linkXRef>false</linkXRef>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>150</minimumTokens>
+                </configuration>
+            </plugin>
+
+            <!-- Checkstyle plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${plugin.checkstyle.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>checkstyle-test</id>
+                        <phase>test</phase>
+
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <configLocation>${plugin.checkstyle.configuration}</configLocation>
+                    <suppressionsLocation>${plugin.checkstyle.suppressions}</suppressionsLocation>
+                    <propertyExpansion>config_loc=${codequality.directory}</propertyExpansion>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <failOnViolation>true</failOnViolation>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                    <consoleOutput>true</consoleOutput>
                 </configuration>
             </plugin>
         </plugins>

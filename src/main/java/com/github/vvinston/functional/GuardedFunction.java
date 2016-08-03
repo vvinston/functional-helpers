@@ -16,13 +16,15 @@ public class GuardedFunction<T, R> implements Function<T, R> {
         this.fallback = fallback;
     }
 
+    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
     public R apply(final T input) {
         try {
             return success.apply(input);
-        } catch (final RuntimeException e) {
-            if (!clazz.isInstance(e)) {
-                throw e;
+
+        } catch (final RuntimeException exception) {
+            if (!clazz.isInstance(exception)) {
+                throw exception;
             }
 
             return fallback.apply(input);
