@@ -8,7 +8,23 @@
     <artifactId>functional-helpers</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+    <name>Functional helpers</name>
     <description>Simple toolkit makes it easier to work with Java 8 functional classes</description>
+    <url>https://github.com/vvinston</url>
+
+    <scm>
+        <url>https://github.com/vvinston/functional-helpers</url>
+        <connection>git@github.com:vvinston/functional-helpers.git</connection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
