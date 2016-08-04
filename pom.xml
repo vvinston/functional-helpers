@@ -4,9 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.vvinston</groupId>
+    <groupId>com.github.vvinston.commons</groupId>
     <artifactId>functional-helpers</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <description>Simple toolkit makes it easier to work with Java 8 functional classes</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +24,7 @@
         <plugin.checkstyle.version>2.17</plugin.checkstyle.version>
         <plugin.checkstyle.configuration>${codequality.directory}/checkstyle-configuration.xml</plugin.checkstyle.configuration>
         <plugin.checkstyle.suppressions>${codequality.directory}/checkstyle-suppressions.xml</plugin.checkstyle.suppressions>
+        <plugin.jacoco.version>0.7.7.201606060606</plugin.jacoco.version>
 
         <!-- Dependency properties -->
         <junit.version>4.11</junit.version>
@@ -106,6 +109,59 @@
                     <linkXRef>false</linkXRef>
                     <consoleOutput>true</consoleOutput>
                 </configuration>
+            </plugin>
+
+            <!-- JoCoCo plugin -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${plugin.jacoco.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>jacoco-prepare-agent</id>
+
+                        <goals>
+
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>jacoco-prepare</id>
+                        <phase>prepare-package</phase>
+
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>jacoco-test</id>
+
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+
+                        <configuration>
+                            <rules>
+                                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                                    <element>BUNDLE</element>
+                                    <excludes>
+                                        <exclude>*Test</exclude>
+                                    </excludes>
+                                    <limits>
+                                        <limit implementation="org.jacoco.report.check.Limit">
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.95</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
