@@ -52,7 +52,6 @@ public class GuardedFunction<T, R> implements Function<T, R> {
 
         private final Function<T, R> success;
 
-
         private final Class<? extends RuntimeException> clazz;
 
         public GuardedFunctionBuilderStepTwo(final Class<? extends RuntimeException> clazz, final Function<T, R> success) {

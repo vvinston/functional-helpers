@@ -25,9 +25,11 @@
         <plugin.checkstyle.configuration>${codequality.directory}/checkstyle-configuration.xml</plugin.checkstyle.configuration>
         <plugin.checkstyle.suppressions>${codequality.directory}/checkstyle-suppressions.xml</plugin.checkstyle.suppressions>
         <plugin.jacoco.version>0.7.7.201606060606</plugin.jacoco.version>
+        <plugin.jacoco.expectedCoverage>0.95</plugin.jacoco.expectedCoverage>
 
         <!-- Dependency properties -->
         <junit.version>4.11</junit.version>
+        <mockito.version>1.9.5</mockito.version>
     </properties>
 
     <dependencies>
@@ -36,6 +38,12 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
         </dependency>
     </dependencies>
 
@@ -152,9 +160,14 @@
                                     </excludes>
                                     <limits>
                                         <limit implementation="org.jacoco.report.check.Limit">
-                                            <counter>LINE</counter>
+                                            <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.95</minimum>
+                                            <minimum>${plugin.jacoco.expectedCoverage}</minimum>
+                                        </limit>
+                                        <limit implementation="org.jacoco.report.check.Limit">
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${plugin.jacoco.expectedCoverage}</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

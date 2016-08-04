@@ -7,20 +7,23 @@ import java.util.function.Predicate;
 
 public class ConditionalFunctionTest {
 
+    private static final String SUCCESS = "success";
+    private static final String FAIL = "fail";
+
     private final Predicate<Boolean> predicate = condition -> condition;
-
-    private final Function<Boolean, String> success = input -> "success";
-
-    private final Function<Boolean, String> fail = input -> "fail";
+    private final Function<Boolean, String> success = input -> SUCCESS;
+    private final Function<Boolean, String> fail = input -> FAIL;
 
     @Test
     public void testHappyPath() {
-        final Function<Boolean, String> conditionalFunction = ConditionalFunction
+        // given
+        final Function<Boolean, String> testSubject = ConditionalFunction
                 .when(predicate)
                 .then(success)
                 .otherwise(fail);
 
-        Assert.assertEquals("success", conditionalFunction.apply(true));
-        Assert.assertEquals("fail", conditionalFunction.apply(false));
+        // then
+        Assert.assertEquals(SUCCESS, testSubject.apply(true));
+        Assert.assertEquals(FAIL, testSubject.apply(false));
     }
 }

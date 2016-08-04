@@ -18,4 +18,9 @@ public class NullableFunction<T, R> implements Function<T, R> {
         final Optional<R> result = success.apply(input);
         return result.isPresent() ? result.get() : fallback.apply(input);
     }
+
+    public static <T, R> NullableFunction<T, R> getFunctionWithConstantFallbackValue(final Function<T, Optional<R>> success, final R fallbackValue) {
+        final Function<T, R> fallback = input -> fallbackValue;
+        return new NullableFunction<>(success, fallback);
+    }
 }

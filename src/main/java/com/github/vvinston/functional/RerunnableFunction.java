@@ -8,11 +8,11 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
 
     private final Function<T, R> function;
 
-    private final int numberOfPossibleRetries;
+    private final int numberOfPossibleAttempts;
 
-    public RerunnableFunction(final Function<T, R> function, final int numberOfPossibleRetries) {
+    public RerunnableFunction(final Function<T, R> function, final int numberOfPossibleAttempts) {
         this.function = function;
-        this.numberOfPossibleRetries = numberOfPossibleRetries;
+        this.numberOfPossibleAttempts = numberOfPossibleAttempts;
     }
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
@@ -21,15 +21,32 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         final List<RuntimeException> exceptions = new ArrayList<>();
         int numberOfAttempts = 0;
 
-        do {
+        while (numberOfAttempts < numberOfPossibleAttempts) {
             try {
                 return function.apply(input);
             } catch (final RuntimeException exception) {
                 exceptions.add(exception);
                 numberOfAttempts++;
             }
-        } while (numberOfAttempts < numberOfPossibleRetries);
+        }
 
         throw new RerunnableException("Could not successfully run function!", exceptions);
+    }
+
+    public static <T, R> RerunnableFunctionBuilderStepOne doTry(final Function<T, R> function) {
+        return new RerunnableFunctionBuilderStepOne(function);
+    }
+
+    public static final class RerunnableFunctionBuilderStepOne<T, R> {
+
+        private final Function<T, R> function;
+
+        public RerunnableFunctionBuilderStepOne(final Function<T, R> function) {
+            this.function = function;
+        }
+
+        public RerunnableFunction<T, R> times(final int numberOfPossibleAttempts) {
+            return new RerunnableFunction<>(function, numberOfPossibleAttempts);
+        }
     }
 }
