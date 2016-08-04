@@ -17,6 +17,12 @@ public class RerunnableFunctionTest {
     @Mock
     private Function<Boolean, String> function;
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testInstantiateWithNegativeNumberOfAttempts() {
+        // given
+        new RerunnableFunction<>(function, -3);
+    }
+
     @Test
     public void testSuccessfulRunningWillReturnWithResult() {
         // given

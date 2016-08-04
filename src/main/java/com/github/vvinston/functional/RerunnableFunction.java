@@ -1,5 +1,7 @@
 package com.github.vvinston.functional;
 
+import com.google.common.base.Preconditions;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,8 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
     private final int numberOfPossibleAttempts;
 
     public RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
-        this.function = function;
+        Preconditions.checkArgument(numberOfPossibleAttempts >= 0, "Number of possible attempts can not be negative!");
+        this.function = Preconditions.checkNotNull(function);
         this.numberOfPossibleAttempts = numberOfPossibleAttempts;
     }
 
@@ -35,7 +38,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
     }
 
     public static <T, R> RerunnableFunctionBuilderStepOne doTry(@Nonnull final Function<T, R> function) {
-        return new RerunnableFunctionBuilderStepOne(function);
+        return new RerunnableFunctionBuilderStepOne(Preconditions.checkNotNull(function));
     }
 
     public static final class RerunnableFunctionBuilderStepOne<T, R> {
@@ -43,7 +46,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         private final Function<T, R> function;
 
         public RerunnableFunctionBuilderStepOne(@Nonnull final Function<T, R> function) {
-            this.function = function;
+            this.function = Preconditions.checkNotNull(function);
         }
 
         public RerunnableFunction<T, R> times(final int numberOfPossibleAttempts) {

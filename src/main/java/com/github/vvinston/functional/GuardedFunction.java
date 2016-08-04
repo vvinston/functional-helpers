@@ -1,5 +1,7 @@
 package com.github.vvinston.functional;
 
+import com.google.common.base.Preconditions;
+
 import javax.annotation.Nonnull;
 import java.util.function.Function;
 
@@ -15,9 +17,9 @@ public class GuardedFunction<T, R> implements Function<T, R> {
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final Function<T, R> success,
             @Nonnull final Function<T, R> fallback) {
-        this.clazz = clazz;
-        this.success = success;
-        this.fallback = fallback;
+        this.clazz = Preconditions.checkNotNull(clazz);
+        this.success = Preconditions.checkNotNull(success);
+        this.fallback = Preconditions.checkNotNull(fallback);
     }
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
@@ -36,19 +38,19 @@ public class GuardedFunction<T, R> implements Function<T, R> {
     }
 
     public static <T, R> GuardedFunctionBuilderStepOne doTry(@Nonnull final Function<T, R> success) {
-        return new GuardedFunctionBuilderStepOne(success);
+        return new GuardedFunctionBuilderStepOne(Preconditions.checkNotNull(success));
     }
 
     public static class GuardedFunctionBuilderStepOne<T, R> {
 
         private final Function<T, R> success;
 
-        public GuardedFunctionBuilderStepOne(final Function<T, R> success) {
-            this.success = success;
+        public GuardedFunctionBuilderStepOne(@Nonnull final Function<T, R> success) {
+            this.success = Preconditions.checkNotNull(success);
         }
 
         public GuardedFunctionBuilderStepTwo<T, R> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
-            return new GuardedFunctionBuilderStepTwo(clazz, success);
+            return new GuardedFunctionBuilderStepTwo(clazz, Preconditions.checkNotNull(success));
         }
     }
 
@@ -59,12 +61,12 @@ public class GuardedFunction<T, R> implements Function<T, R> {
         private final Class<? extends RuntimeException> clazz;
 
         public GuardedFunctionBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final Function<T, R> success) {
-            this.clazz = clazz;
-            this.success = success;
+            this.clazz = Preconditions.checkNotNull(clazz);
+            this.success = Preconditions.checkNotNull(success);
         }
 
         public GuardedFunction<T, R> fallbackTo(@Nonnull final Function<T, R> fallback) {
-            return new GuardedFunction<>(clazz, success, fallback);
+            return new GuardedFunction<>(clazz, success, Preconditions.checkNotNull(fallback));
         }
     }
 }
