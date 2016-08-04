@@ -37,7 +37,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         throw new RerunnableException("Could not successfully run function!", exceptions);
     }
 
-    public static <T, R> RerunnableFunctionBuilderStepOne doTry(@Nonnull final Function<T, R> function) {
+    public static <T, R> RerunnableFunctionBuilderStepOne attempt(@Nonnull final Function<T, R> function) {
         return new RerunnableFunctionBuilderStepOne(Preconditions.checkNotNull(function));
     }
 
