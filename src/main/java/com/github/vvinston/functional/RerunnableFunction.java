@@ -1,5 +1,6 @@
 package com.github.vvinston.functional;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -10,7 +11,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
 
     private final int numberOfPossibleAttempts;
 
-    public RerunnableFunction(final Function<T, R> function, final int numberOfPossibleAttempts) {
+    public RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
         this.function = function;
         this.numberOfPossibleAttempts = numberOfPossibleAttempts;
     }
@@ -33,7 +34,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         throw new RerunnableException("Could not successfully run function!", exceptions);
     }
 
-    public static <T, R> RerunnableFunctionBuilderStepOne doTry(final Function<T, R> function) {
+    public static <T, R> RerunnableFunctionBuilderStepOne doTry(@Nonnull final Function<T, R> function) {
         return new RerunnableFunctionBuilderStepOne(function);
     }
 
@@ -41,7 +42,7 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
 
         private final Function<T, R> function;
 
-        public RerunnableFunctionBuilderStepOne(final Function<T, R> function) {
+        public RerunnableFunctionBuilderStepOne(@Nonnull final Function<T, R> function) {
             this.function = function;
         }
 

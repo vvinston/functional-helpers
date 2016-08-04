@@ -1,5 +1,6 @@
 package com.github.vvinston.functional;
 
+import javax.annotation.Nonnull;
 import java.util.function.Function;
 
 public class GuardedFunction<T, R> implements Function<T, R> {
@@ -10,7 +11,10 @@ public class GuardedFunction<T, R> implements Function<T, R> {
 
     private final Function<T, R> fallback;
 
-    public GuardedFunction(final Class<? extends RuntimeException> clazz, final Function<T, R> success, final Function<T, R> fallback) {
+    public GuardedFunction(
+            @Nonnull final Class<? extends RuntimeException> clazz,
+            @Nonnull final Function<T, R> success,
+            @Nonnull final Function<T, R> fallback) {
         this.clazz = clazz;
         this.success = success;
         this.fallback = fallback;
@@ -31,7 +35,7 @@ public class GuardedFunction<T, R> implements Function<T, R> {
         }
     }
 
-    public static <T, R> GuardedFunctionBuilderStepOne doTry(final Function<T, R> success) {
+    public static <T, R> GuardedFunctionBuilderStepOne doTry(@Nonnull final Function<T, R> success) {
         return new GuardedFunctionBuilderStepOne(success);
     }
 
@@ -43,7 +47,7 @@ public class GuardedFunction<T, R> implements Function<T, R> {
             this.success = success;
         }
 
-        public GuardedFunctionBuilderStepTwo<T, R> inCaseOf(final Class<? extends RuntimeException> clazz) {
+        public GuardedFunctionBuilderStepTwo<T, R> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
             return new GuardedFunctionBuilderStepTwo(clazz, success);
         }
     }
@@ -54,12 +58,12 @@ public class GuardedFunction<T, R> implements Function<T, R> {
 
         private final Class<? extends RuntimeException> clazz;
 
-        public GuardedFunctionBuilderStepTwo(final Class<? extends RuntimeException> clazz, final Function<T, R> success) {
+        public GuardedFunctionBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final Function<T, R> success) {
             this.clazz = clazz;
             this.success = success;
         }
 
-        public GuardedFunction<T, R> fallbacktTo(final Function<T, R> fallback) {
+        public GuardedFunction<T, R> fallbackTo(@Nonnull final Function<T, R> fallback) {
             return new GuardedFunction<>(clazz, success, fallback);
         }
     }

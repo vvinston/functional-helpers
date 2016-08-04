@@ -1,5 +1,6 @@
 package com.github.vvinston.functional;
 
+import javax.annotation.Nonnull;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -11,7 +12,7 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
 
     private final Function<T, R> fail;
 
-    public ConditionalFunction(final Predicate<T> predicate, final Function<T, R> success, final Function<T, R> fail) {
+    public ConditionalFunction(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R> success, @Nonnull final Function<T, R> fail) {
         this.predicate = predicate;
         this.success = success;
         this.fail = fail;
@@ -22,7 +23,7 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
         return predicate.test(input) ? success.apply(input) : fail.apply(input);
     }
 
-    public static <T> ConditionalFunctionBuilderStepOne<T> when(final Predicate<T> predicate) {
+    public static <T> ConditionalFunctionBuilderStepOne<T> when(@Nonnull final Predicate<T> predicate) {
         return new ConditionalFunctionBuilderStepOne<>(predicate);
     }
 
@@ -30,12 +31,12 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
 
         private final Predicate<T> predicate;
 
-        public ConditionalFunctionBuilderStepOne(final Predicate<T> predicate) {
+        public ConditionalFunctionBuilderStepOne(@Nonnull final Predicate<T> predicate) {
             this.predicate = predicate;
         }
 
         @SuppressWarnings("PMD.AccessorClassGeneration")
-        public <R> ConditionalFunctionBuilderStepTwo<T, R> then(final Function<T, R> success) {
+        public <R> ConditionalFunctionBuilderStepTwo<T, R> then(@Nonnull final Function<T, R> success) {
             return new ConditionalFunctionBuilderStepTwo<>(predicate, success);
         }
     }
@@ -46,12 +47,12 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
 
         private final Function<T, R> success;
 
-        private ConditionalFunctionBuilderStepTwo(final Predicate<T> predicate, final Function<T, R> success) {
+        private ConditionalFunctionBuilderStepTwo(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R> success) {
             this.predicate = predicate;
             this.success = success;
         }
 
-        public ConditionalFunction<T, R> otherwise(final Function<T, R> fail) {
+        public ConditionalFunction<T, R> otherwise(@Nonnull final Function<T, R> fail) {
             return new ConditionalFunction<>(predicate, success, fail);
         }
     }
