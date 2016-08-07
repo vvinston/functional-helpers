@@ -10,7 +10,6 @@ import java.util.function.Function;
 public class RerunnableFunction<T, R> implements Function<T, R> {
 
     private final Function<T, R> function;
-
     private final int numberOfPossibleAttempts;
 
     public RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
@@ -42,7 +41,6 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
     }
 
     public static final class RerunnableFunctionBuilderStepOne<T, R> {
-
         private final Function<T, R> function;
 
         public RerunnableFunctionBuilderStepOne(@Nonnull final Function<T, R> function) {

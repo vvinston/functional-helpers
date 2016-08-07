@@ -9,7 +9,6 @@ import java.util.function.Function;
 public class DeterministicFunction<T, R> implements Function<T, R> {
 
     private final Cache<T, R> cache;
-
     private final Function<T, R> function;
 
     public DeterministicFunction(@Nonnull final Cache<T, R> cache, @Nonnull final Function<T, R> function) {

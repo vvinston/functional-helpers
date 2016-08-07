@@ -9,9 +9,7 @@ import java.util.function.Predicate;
 public class ConditionalFunction<T, R> implements Function<T, R> {
 
     private final Predicate<T> predicate;
-
     private final Function<T, R> success;
-
     private final Function<T, R> fail;
 
     public ConditionalFunction(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R> success, @Nonnull final Function<T, R> fail) {

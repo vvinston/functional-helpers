@@ -31,6 +31,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version.source>1.8</java.version.source>
         <java.version.target>1.8</java.version.target>
+        <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+        <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <codequality.directory>${basedir}/codequality</codequality.directory>
 
         <!-- Plugin properties -->
@@ -116,7 +118,7 @@
                     <targetJdk>${java.version.target}</targetJdk>
                     <failOnViolation>true</failOnViolation>
                     <linkXRef>false</linkXRef>
-                    <sourceEncoding>utf-8</sourceEncoding>
+                    <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                     <minimumTokens>150</minimumTokens>
                 </configuration>
             </plugin>
