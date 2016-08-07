@@ -42,6 +42,7 @@ public class GuardedFunction<T, R> implements Function<T, R> {
     }
 
     public static class GuardedFunctionBuilderStepOne<T, R> {
+
         private final Function<T, R> success;
 
         public GuardedFunctionBuilderStepOne(@Nonnull final Function<T, R> success) {
@@ -54,8 +55,8 @@ public class GuardedFunction<T, R> implements Function<T, R> {
     }
 
     public static class GuardedFunctionBuilderStepTwo<T, R> {
-        private final Function<T, R> success;
 
+        private final Function<T, R> success;
         private final Class<? extends RuntimeException> clazz;
 
         public GuardedFunctionBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final Function<T, R> success) {

@@ -10,6 +10,10 @@ The helper classes come in multiple flavors. Depending on the implemented interf
 
 For the case when multiple ways of execution is possible based on the content of the input.
 
+##### Either
+
+For the case depending on the input we would like to return with different data type. Highly similar with Conditional flavor but adds extra flexibility with return type.
+
 ##### Deterministic
 
 For the case we expect the very same result for the same input every times (like in case of real functional programming) and we want to avoid calculate it again.

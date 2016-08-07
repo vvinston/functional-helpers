@@ -221,7 +221,6 @@
     <rule ref="rulesets/java/naming.xml/AvoidFieldNameMatchingTypeName" />
     <rule ref="rulesets/java/naming.xml/NoPackage" />
     <rule ref="rulesets/java/naming.xml/PackageCase" />
-    <rule ref="rulesets/java/naming.xml/GenericsNaming" />
 
     <!-- Optimalization rules -->
     <rule ref="rulesets/java/optimizations.xml/LocalVariableCouldBeFinal" />

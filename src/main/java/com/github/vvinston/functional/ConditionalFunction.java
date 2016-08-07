@@ -44,7 +44,6 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
     public static final class ConditionalFunctionBuilderStepTwo<T, R> {
 
         private final Predicate<T> predicate;
-
         private final Function<T, R> success;
 
         private ConditionalFunctionBuilderStepTwo(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R> success) {
