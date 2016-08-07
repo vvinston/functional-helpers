@@ -30,6 +30,18 @@ For the case decorated function could return with null and we want to enforce ty
 
 For the case the original function could be ended up with throwing exception (just like in case of Guarded flavor) and we want to do more attempts calling it.
 
+## Support matrix
+
+The following table shows the support of the different flavors and interfaces:
+
+|            	| Conditional 	| Either    	| Deterministic 	| Guarded   	| Nullable  	| Rerunnable 	|
+|------------	|-------------	|-----------	|---------------	|-----------	|-----------	|------------	|
+| Function   	| Supported   	| Supported 	| Supported     	| Supported 	| Supported 	| Supported  	|
+| BiFunction 	| Planned     	| Planned   	| Planned       	| Planned   	| Supported 	| Planned    	|
+| Consumer   	| Planned     	|           	|               	| Supported 	|           	| Planned    	|
+| BiConsumer 	| Planned     	|           	|               	| Planned   	|           	| Planned    	|
+| Supplier   	| Planned     	|           	|               	| Planned   	|           	| Planned    	|
+
 ## Examples
 
 ### Example 1: Having a bulletproof business function
