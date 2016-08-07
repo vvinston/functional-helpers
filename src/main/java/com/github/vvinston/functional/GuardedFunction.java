@@ -8,9 +8,7 @@ import java.util.function.Function;
 public class GuardedFunction<T, R> implements Function<T, R> {
 
     private final Class<? extends RuntimeException> clazz;
-
     private final Function<T, R> success;
-
     private final Function<T, R> fallback;
 
     public GuardedFunction(

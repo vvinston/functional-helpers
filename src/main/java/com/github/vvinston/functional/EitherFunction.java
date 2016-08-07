@@ -9,9 +9,7 @@ import java.util.function.Predicate;
 public class EitherFunction<T, R1, R2> implements Function<T, Either<R1, R2>> {
 
     private final Predicate<T> predicate;
-
     private final Function<T, R1> leftFunction;
-
     private final Function<T, R2> rightFunction;
 
     public EitherFunction(
