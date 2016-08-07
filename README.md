@@ -40,7 +40,7 @@ The following table shows the support of the different flavors and interfaces:
 | BiFunction 	| Planned     	| Planned   	| Planned       	| Planned   	| Supported 	| Planned    	|
 | Consumer   	| Planned     	|           	|               	| Supported 	|           	| Planned    	|
 | BiConsumer 	| Planned     	|           	|               	| Planned   	|           	| Planned    	|
-| Supplier   	| Planned     	|           	|               	| Planned   	|           	| Planned    	|
+| Supplier   	|           	|           	|               	| Planned   	| Planned    	| Planned    	|
 
 ## Examples
 
