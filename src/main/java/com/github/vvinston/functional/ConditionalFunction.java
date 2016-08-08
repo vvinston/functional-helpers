@@ -12,7 +12,10 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
     private final Function<T, R> success;
     private final Function<T, R> fail;
 
-    public ConditionalFunction(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R> success, @Nonnull final Function<T, R> fail) {
+    public ConditionalFunction(
+            @Nonnull final Predicate<T> predicate,
+            @Nonnull final Function<T, R> success,
+            @Nonnull final Function<T, R> fail) {
         this.predicate = Preconditions.checkNotNull(predicate);
         this.success = Preconditions.checkNotNull(success);
         this.fail = Preconditions.checkNotNull(fail);

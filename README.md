@@ -37,9 +37,9 @@ The following table shows the support of the different flavors and interfaces:
 |            	| Conditional 	| Either    	| Deterministic 	| Guarded   	| Nullable  	| Rerunnable 	|
 |------------	|-------------	|-----------	|---------------	|-----------	|-----------	|------------	|
 | Function   	| Supported   	| Supported 	| Supported     	| Supported 	| Supported 	| Supported  	|
-| BiFunction 	| Planned     	| Planned   	| Planned       	| Planned   	| Supported 	| Planned    	|
-| Consumer   	| Planned     	|           	|               	| Supported 	|           	| Planned    	|
-| BiConsumer 	| Planned     	|           	|               	| Planned   	|           	| Planned    	|
+| BiFunction 	| Supported   	| Planned   	| Planned       	| Planned   	| Supported 	| Planned    	|
+| Consumer   	| Supported   	|           	|               	| Supported 	|           	| Planned    	|
+| BiConsumer 	| Supported   	|           	|               	| Planned   	|           	| Planned    	|
 | Supplier   	|           	|           	|               	| Planned   	| Planned    	| Planned    	|
 
 ## Examples

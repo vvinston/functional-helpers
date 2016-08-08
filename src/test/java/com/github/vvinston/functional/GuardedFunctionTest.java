@@ -2,6 +2,7 @@ package com.github.vvinston.functional;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.util.function.Function;
 
 public class GuardedFunctionTest {
