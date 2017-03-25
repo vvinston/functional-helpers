@@ -2,6 +2,10 @@
 
 Simple toolkit makes it easier to work with Java 8 function classes. This project does not aim to provide total functional support to Java but to redound extend business logic into smaller chunks and organize these steps into a working function.
 
+## Usage
+
+The toolkit provides a facade class for the basic usage of the features, called _Functions_. Expect the extraordinary setups this util class is capable to create most of the necessary instances.   
+
 ## Flavors
 
 The helper classes come in multiple flavors. Depending on the implemented interface(s) they could come with different arguments and somewhat different behaviour, but the basic idea is the same behind. The project currently comes in the following flavors:
@@ -48,9 +52,12 @@ The following table shows the support of the different flavors and interfaces:
 
 ## Predicate wrappers
 
-To make them interchangeable, similar way as it happens at [Google](https://github.com/google/guava/blob/master/guava/src/com/google/common/base/Functions.java) with their function implementation, this toolbox provides support to wrap Predicate into Function and the way back. This works both way with one and two argument versions of them.
+To make them interchangeable, similar way as it happens at [Google](https://github.com/google/guava/blob/master/guava/src/com/google/common/base/Functions.java) with their function implementation, this toolbox provides support to wrap Predicate into Function and the way back. This works both way with one and two argument versions of them. The following mappings are possible:
 
-
+- Function -> Preditace
+- Preditace -> Function
+- BiFunction -> BiPreditace
+- BiPreditace -> BiFunction
 
 ## Examples
 
@@ -83,5 +90,18 @@ final Function<C, Result> guardedGenerate = NullableFunction
     .getFunctionWithConstantFallbackValue(generate, defaultErrorMessage);
 
 final Result = acquireExternalData.andThen(tokenize).andThen(guardedGenerate).apply(input);
+
+```
+
+### Example 3: Wrapping function around with predicate
+
+```java
+final Function<A, Boolean> booleanFunction = ...;
+final Function<A, B> function1 = ...;
+final Function<A, B> function2 = ...;
+
+final Function<A, B> result = ConditionalFunction.when(Functions.predicateOf(booleanFunction))
+     .then(function1)
+     .otherwise(function2);
 
 ```
