@@ -22,7 +22,9 @@ public class EitherFunction<T, R1, R2> implements Function<T, Either<R1, R2>> {
 
     @Override
     public Either<R1, R2> apply(final T input) {
-        return predicate.test(input) ? Either.left(leftFunction.apply(input)) : Either.right(rightFunction.apply(input));
+        return predicate.test(input)
+                ? Either.left(leftFunction.apply(input))
+                : Either.right(rightFunction.apply(input));
     }
 
     public static <T> EitherFunctionBuilderStepOne<T> when(@Nonnull final Predicate<T> predicate) {

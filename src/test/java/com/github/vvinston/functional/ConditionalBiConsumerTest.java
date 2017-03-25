@@ -1,5 +1,6 @@
 package com.github.vvinston.functional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -12,43 +13,75 @@ import java.util.function.BiPredicate;
 @RunWith(MockitoJUnitRunner.class)
 public class ConditionalBiConsumerTest {
 
-    private final BiPredicate<Boolean, Boolean> predicate = (condition1, condition2) -> condition1;
+    @Mock
+    private BiPredicate<Boolean, Boolean> predicate1;
 
     @Mock
-    private BiConsumer<Boolean, Boolean> success;
+    private BiPredicate<Boolean, Boolean> predicate2;
 
     @Mock
-    private BiConsumer<Boolean, Boolean> fail;
+    private BiConsumer<Boolean, Boolean> consumer1;
+
+    @Mock
+    private BiConsumer<Boolean, Boolean> consumer2;
+
+    @Mock
+    private BiConsumer<Boolean, Boolean> consumer3;
+
+    @Before
+    public void setUp() {
+        Mockito.when(predicate1.test(Mockito.anyBoolean(), Mockito.anyBoolean())).thenReturn(false);
+        Mockito.when(predicate2.test(Mockito.anyBoolean(), Mockito.anyBoolean())).thenReturn(false);
+    }
 
     @Test
-    public void testSuccess() {
+    public void testCase1() {
         // given
-        final BiConsumer<Boolean, Boolean> testSubject = ConditionalBiConsumer
-                .when(predicate)
-                .then(success)
-                .otherwise(fail);
+        final BiConsumer<Boolean, Boolean> testSubject = givenTestSubject();
+        Mockito.when(predicate1.test(Mockito.anyBoolean(), Mockito.anyBoolean())).thenReturn(true);
 
         // when
         testSubject.accept(true, true);
 
         // then
-        Mockito.verify(success, Mockito.times(1)).accept(true, true);
-        Mockito.verify(fail, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+        Mockito.verify(consumer1, Mockito.times(1)).accept(true, true);
+        Mockito.verify(consumer2, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+        Mockito.verify(consumer3, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
     }
 
     @Test
-    public void testFail() {
+    public void testCase2() {
         // given
-        final BiConsumer<Boolean, Boolean> testSubject = ConditionalBiConsumer
-                .when(predicate)
-                .then(success)
-                .otherwise(fail);
+        final BiConsumer<Boolean, Boolean> testSubject = givenTestSubject();
+        Mockito.when(predicate2.test(Mockito.anyBoolean(), Mockito.anyBoolean())).thenReturn(true);
 
         // when
-        testSubject.accept(false, true);
+        testSubject.accept(true, true);
 
         // then
-        Mockito.verify(fail, Mockito.times(1)).accept(false, true);
-        Mockito.verify(success, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+        Mockito.verify(consumer1, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+        Mockito.verify(consumer2, Mockito.times(1)).accept(true, true);
+        Mockito.verify(consumer3, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+    }
+
+    @Test
+    public void testCase3() {
+        // given
+        final BiConsumer<Boolean, Boolean> testSubject = givenTestSubject();
+
+        // when
+        testSubject.accept(true, true);
+
+        // then
+        Mockito.verify(consumer1, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+        Mockito.verify(consumer2, Mockito.never()).accept(Mockito.anyBoolean(), Mockito.anyBoolean());
+        Mockito.verify(consumer3, Mockito.times(1)).accept(true, true);
+    }
+
+    private ConditionalBiConsumer<Boolean, Boolean> givenTestSubject() {
+        return ConditionalBiConsumer
+                .when(predicate1).then(consumer1)
+                .when(predicate2).then(consumer2)
+                .otherwise(consumer3);
     }
 }

@@ -18,6 +18,10 @@ For the case depending on the input we would like to return with different data 
 
 For the case we expect the very same result for the same input every times (like in case of real functional programming) and we want to avoid calculate it again.
 
+##### Memoic
+
+Similar to deterministic family but with less flexibility. This implementation builds on the top of map's _computeIfAbsent_ method, preventing the usage of various cache implementations but map. Contrary in some cases this might be faster
+
 ##### Guarded
 
 For the case payload might throws exception but we want to handle it within the function.
@@ -34,13 +38,19 @@ For the case the original function could be ended up with throwing exception (ju
 
 The following table shows the support of the different flavors and interfaces:
 
-|            	| Conditional 	| Either    	| Deterministic 	| Guarded   	| Nullable  	| Rerunnable 	|
-|------------	|-------------	|-----------	|---------------	|-----------	|-----------	|------------	|
-| Function   	| Supported   	| Supported 	| Supported     	| Supported 	| Supported 	| Supported  	|
-| BiFunction 	| Supported   	| Planned   	| Planned       	| Planned   	| Supported 	| Planned    	|
-| Consumer   	| Supported   	|           	|               	| Supported 	|           	| Planned    	|
-| BiConsumer 	| Supported   	|           	|               	| Planned   	|           	| Planned    	|
-| Supplier   	|           	|           	|               	| Planned   	| Planned    	| Planned    	|
+|            	| Conditional 	| Either    	| Deterministic 	|Memoic         | Guarded   	| Nullable  	| Rerunnable 	|
+|------------	|-------------	|-----------	|---------------	|-----------    |-----------	|-----------	|------------	|
+| Function   	| Supported   	| Supported 	| Supported     	| Supported		| Supported 	| Supported 	| Supported  	|
+| BiFunction 	| Supported   	| Supported   	| Supported       	| 				| Supported   	| Supported 	| Supported    	|
+| Consumer   	| Supported   	|           	|               	|				| Supported 	|           	| Supported    	|
+| BiConsumer 	| Supported   	|           	|               	|				| Supported   	|           	| Supported    	|
+| Supplier   	|           	|           	|               	|				| Supported   	| Supported    	| Supported    	|
+
+## Predicate wrappers
+
+To make them interchangeable, similar way as it happens at [Google](https://github.com/google/guava/blob/master/guava/src/com/google/common/base/Functions.java) with their function implementation, this toolbox provides support to wrap Predicate into Function and the way back. This works both way with one and two argument versions of them.
+
+
 
 ## Examples
 

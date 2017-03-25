@@ -1,28 +1,33 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class ConditionalFunction<T, R> implements Function<T, R> {
 
-    private final Predicate<T> predicate;
-    private final Function<T, R> success;
-    private final Function<T, R> fail;
+    private final List<Tuple<Predicate<T>, Function<T, R>>> cases = new LinkedList<>();
+    private final Function<T, R> otherwise;
 
     public ConditionalFunction(
-            @Nonnull final Predicate<T> predicate,
-            @Nonnull final Function<T, R> success,
-            @Nonnull final Function<T, R> fail) {
-        this.predicate = Objects.requireNonNull(predicate);
-        this.success = Objects.requireNonNull(success);
-        this.fail = Objects.requireNonNull(fail);
+            @Nonnull final List<Tuple<Predicate<T>, Function<T, R>>> cases,
+            @Nonnull final Function<T, R> otherwise) {
+        this.cases.addAll(Objects.requireNonNull(cases));
+        this.otherwise = Objects.requireNonNull(otherwise);
     }
 
     @Override
     public R apply(final T input) {
-        return predicate.test(input) ? success.apply(input) : fail.apply(input);
+        for (final Tuple<Predicate<T>, Function<T, R>> kase : cases) {
+            if (kase.getFirst().test(input)) {
+                return kase.getSecond().apply(input);
+            }
+        }
+
+        return  otherwise.apply(input);
     }
 
     public static <T> ConditionalFunctionBuilderStepOne<T> when(@Nonnull final Predicate<T> predicate) {
@@ -39,22 +44,45 @@ public class ConditionalFunction<T, R> implements Function<T, R> {
 
         @SuppressWarnings("PMD.AccessorClassGeneration")
         public <R> ConditionalFunctionBuilderStepTwo<T, R> then(@Nonnull final Function<T, R> success) {
-            return new ConditionalFunctionBuilderStepTwo<>(predicate, Objects.requireNonNull(success));
+            final List<Tuple<Predicate<T>, Function<T, R>>> cases = new LinkedList<>();
+            cases.add(Tuple.of(predicate, Objects.requireNonNull(success)));
+            return new ConditionalFunctionBuilderStepTwo<>(cases);
         }
     }
 
     public static final class ConditionalFunctionBuilderStepTwo<T, R> {
 
-        private final Predicate<T> predicate;
-        private final Function<T, R> success;
+        private final List<Tuple<Predicate<T>, Function<T, R>>> cases;
 
-        private ConditionalFunctionBuilderStepTwo(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R> success) {
-            this.predicate = Objects.requireNonNull(predicate);
-            this.success = Objects.requireNonNull(success);
+        private ConditionalFunctionBuilderStepTwo(@Nonnull final List<Tuple<Predicate<T>, Function<T, R>>> cases) {
+            this.cases = Objects.requireNonNull(cases);
         }
 
-        public ConditionalFunction<T, R> otherwise(@Nonnull final Function<T, R> fail) {
-            return new ConditionalFunction<>(predicate, success, Objects.requireNonNull(fail));
+        public ConditionalFunctionBuilderStepThree<T, R> when(@Nonnull final Predicate<T> predicate) {
+            return new ConditionalFunctionBuilderStepThree<>(Objects.requireNonNull(predicate), cases);
+        }
+
+        public ConditionalFunction<T, R> otherwise(@Nonnull final Function<T, R> otherwise) {
+            return new ConditionalFunction<>(cases, Objects.requireNonNull(otherwise));
+        }
+    }
+
+    public static final class ConditionalFunctionBuilderStepThree<T, R> {
+
+        private final List<Tuple<Predicate<T>, Function<T, R>>> cases;
+        private final Predicate<T> predicate;
+
+        public ConditionalFunctionBuilderStepThree(
+                @Nonnull final Predicate<T> predicate,
+                @Nonnull final List<Tuple<Predicate<T>, Function<T, R>>> cases) {
+            this.predicate = Objects.requireNonNull(predicate);
+            this.cases = Objects.requireNonNull(cases);
+        }
+
+        @SuppressWarnings("PMD.AccessorClassGeneration")
+        public ConditionalFunctionBuilderStepTwo<T, R> then(@Nonnull final Function<T, R> success) {
+            cases.add(Tuple.of(predicate, Objects.requireNonNull(success)));
+            return new ConditionalFunctionBuilderStepTwo<>(cases);
         }
     }
 }

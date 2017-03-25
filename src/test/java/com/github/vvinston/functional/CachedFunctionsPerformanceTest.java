@@ -6,20 +6,20 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 @RunWith(Parameterized.class)
 public class CachedFunctionsPerformanceTest {
 
-    private static final Function<Integer, Long> TEST_FUNCTION = i -> (long) i * i * i;
-    private static final int TEST_LENGTH = 10_000;
-    private static final int NUMBER_OF_ITERATIONS = 20;
+    private static final Function<Integer, Long> TEST_FUNCTION = i -> (long) i * i * i * i;
+    private static final int TEST_LENGTH = 25_000;
+    private static final int NUMBER_OF_ITERATIONS = 15;
 
     private final String testName;
     private final Function<Integer, Long> testSubject;
@@ -60,7 +60,7 @@ public class CachedFunctionsPerformanceTest {
             results.add(result);
             final long endTime = System.currentTimeMillis();
             final long calculatedTime = endTime - startTime;
-            System.out.println("Test [" + testName + "] iteration " + n + " ("
+            System.out.println("Performance test [" + testName + "] iteration " + n + " ("
                     + (n == 0 ? "calculation" : "cache") + ") finished. Time: " + calculatedTime + "ms");
         }
 

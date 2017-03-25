@@ -4,11 +4,11 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Objects;
 
-public class MapCache<K, V> implements Cache<K, V> {
+class MapCache<K, V> implements Cache<K, V> {
 
     private final Map<K, V> map;
 
-    public MapCache(@Nonnull final Map<K, V> map) {
+    MapCache(@Nonnull final Map<K, V> map) {
         this.map = Objects.requireNonNull(map);
     }
 

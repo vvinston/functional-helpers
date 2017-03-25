@@ -4,14 +4,14 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
-public class RerunnableFunction<T, R> implements Function<T, R> {
+public class RerunnableBiFunction<T, U, R> implements BiFunction<T, U, R> {
 
-    private final Function<T, R> function;
+    private final BiFunction<T, U, R> function;
     private final int numberOfPossibleAttempts;
 
-    public RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
+    public RerunnableBiFunction(@Nonnull final BiFunction<T, U, R> function, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -22,13 +22,13 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public R apply(final T input) {
+    public R apply(final T input1, final U input2) {
         final List<RuntimeException> exceptions = new ArrayList<>();
         int numberOfAttempts = 0;
 
         while (numberOfAttempts < numberOfPossibleAttempts) {
             try {
-                return function.apply(input);
+                return function.apply(input1, input2);
             } catch (final RuntimeException exception) {
                 exceptions.add(exception);
                 numberOfAttempts++;
@@ -38,19 +38,19 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         throw new RerunnableException("Could not successfully run function!", exceptions);
     }
 
-    public static <T, R> RerunnableFunctionBuilder attempt(@Nonnull final Function<T, R> function) {
-        return new RerunnableFunctionBuilder(Objects.requireNonNull(function));
+    public static <T, U, R> RerunnableBiFunctionBuilderStepOne attempt(@Nonnull final BiFunction<T, U, R> function) {
+        return new RerunnableBiFunctionBuilderStepOne(Objects.requireNonNull(function));
     }
 
-    public static final class RerunnableFunctionBuilder<T, R> {
-        private final Function<T, R> function;
+    public static final class RerunnableBiFunctionBuilderStepOne<T, U, R> {
+        private final BiFunction<T, U, R> function;
 
-        public RerunnableFunctionBuilder(@Nonnull final Function<T, R> function) {
+        public RerunnableBiFunctionBuilderStepOne(@Nonnull final BiFunction<T, U, R> function) {
             this.function = Objects.requireNonNull(function);
         }
 
-        public RerunnableFunction<T, R> times(final int numberOfPossibleAttempts) {
-            return new RerunnableFunction<>(function, numberOfPossibleAttempts);
+        public RerunnableBiFunction<T, U, R> times(final int numberOfPossibleAttempts) {
+            return new RerunnableBiFunction<>(function, numberOfPossibleAttempts);
         }
     }
 }

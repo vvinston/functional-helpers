@@ -1,32 +1,34 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ConditionalConsumer<T> implements Consumer<T> {
 
-    private final Predicate<T> predicate;
-    private final Consumer<T> success;
-    private final Consumer<T> fail;
+    private final List<Tuple<Predicate<T>, Consumer<T>>> cases = new LinkedList<>();
+    private final Consumer<T> otherwise;
 
     public ConditionalConsumer(
-            @Nonnull final Predicate<T> predicate,
-            @Nonnull final Consumer<T> success,
-            @Nonnull final Consumer<T> fail) {
-        this.predicate = Objects.requireNonNull(predicate);
-        this.success = Objects.requireNonNull(success);
-        this.fail = Objects.requireNonNull(fail);
+            @Nonnull final List<Tuple<Predicate<T>, Consumer<T>>> cases,
+            @Nonnull final Consumer<T> otherwise) {
+        this.cases.addAll(Objects.requireNonNull(cases));
+        this.otherwise = Objects.requireNonNull(otherwise);
     }
 
     @Override
     public void accept(@Nonnull final T input) {
-        if (predicate.test(input)) {
-            success.accept(input);
-        } else {
-            fail.accept(input);
+        for (final Tuple<Predicate<T>, Consumer<T>> kase : cases) {
+            if (kase.getFirst().test(input)) {
+                kase.getSecond().accept(input);
+                return;
+            }
         }
+
+        otherwise.accept(input);
     }
 
     public static <T> ConditionalConsumerBuilderStepOne<T> when(@Nonnull final Predicate<T> predicate) {
@@ -43,22 +45,45 @@ public class ConditionalConsumer<T> implements Consumer<T> {
 
         @SuppressWarnings("PMD.AccessorClassGeneration")
         public ConditionalConsumerBuilderStepTwo<T> then(@Nonnull final Consumer<T> success) {
-            return new ConditionalConsumerBuilderStepTwo<>(predicate, Objects.requireNonNull(success));
+            final List<Tuple<Predicate<T>, Consumer<T>>> cases = new LinkedList<>();
+            cases.add(Tuple.of(predicate, success));
+            return new ConditionalConsumerBuilderStepTwo<>(cases);
         }
     }
 
     public static final class ConditionalConsumerBuilderStepTwo<T> {
 
-        private final Predicate<T> predicate;
-        private final Consumer<T> success;
+        private final List<Tuple<Predicate<T>, Consumer<T>>> cases;
 
-        private ConditionalConsumerBuilderStepTwo(@Nonnull final Predicate<T> predicate, @Nonnull final Consumer<T> success) {
-            this.predicate = Objects.requireNonNull(predicate);
-            this.success = Objects.requireNonNull(success);
+        private ConditionalConsumerBuilderStepTwo(@Nonnull final List<Tuple<Predicate<T>, Consumer<T>>> cases) {
+            this.cases = Objects.requireNonNull(cases);
         }
 
-        public ConditionalConsumer<T> otherwise(@Nonnull final Consumer<T> fail) {
-            return new ConditionalConsumer<>(predicate, success, Objects.requireNonNull(fail));
+        public ConditionalConsumerBuilderStepThree<T> when(@Nonnull final Predicate<T> predicate) {
+            return new ConditionalConsumerBuilderStepThree<>(Objects.requireNonNull(predicate), cases);
+        }
+
+        public ConditionalConsumer<T> otherwise(@Nonnull final Consumer<T> otherwise) {
+            return new ConditionalConsumer<>(cases, Objects.requireNonNull(otherwise));
+        }
+    }
+
+    public static final class ConditionalConsumerBuilderStepThree<T> {
+
+        private final Predicate<T> predicate;
+        private final List<Tuple<Predicate<T>, Consumer<T>>> cases;
+
+        public ConditionalConsumerBuilderStepThree(
+                @Nonnull final Predicate<T> predicate,
+                @Nonnull final List<Tuple<Predicate<T>, Consumer<T>>> cases) {
+            this.cases = cases;
+            this.predicate = predicate;
+        }
+
+        @SuppressWarnings("PMD.AccessorClassGeneration")
+        public ConditionalConsumerBuilderStepTwo<T> then(@Nonnull final Consumer<T> success) {
+            cases.add(Tuple.of(predicate, success));
+            return new ConditionalConsumerBuilderStepTwo<>(cases);
         }
     }
 }

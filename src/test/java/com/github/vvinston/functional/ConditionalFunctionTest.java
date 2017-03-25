@@ -15,6 +15,14 @@ public class ConditionalFunctionTest {
     private final Function<Boolean, String> success = input -> SUCCESS;
     private final Function<Boolean, String> fail = input -> FAIL;
 
+    private final Predicate<String> predicate1 = input -> "a".equals(input);
+    private final Predicate<String> predicate2 = input -> "b".equals(input);
+    private final Predicate<String> predicate3 = input -> "c".equals(input);
+    private final Function<String, Integer> function1 = input -> 1;
+    private final Function<String, Integer> function2 = input -> 2;
+    private final Function<String, Integer> function3 = input -> 3;
+    private final Function<String, Integer> function4 = input -> 4;
+
     @Test
     public void testHappyPath() {
         // given
@@ -26,5 +34,22 @@ public class ConditionalFunctionTest {
         // then
         Assert.assertEquals(SUCCESS, testSubject.apply(true));
         Assert.assertEquals(FAIL, testSubject.apply(false));
+    }
+
+    @Test
+    public void testMultipleCases() {
+        // given
+        final Function<String, Integer> testSubject = ConditionalFunction
+                .when(predicate1).then(function1)
+                .when(predicate2).then(function2)
+                .when(predicate3).then(function3)
+                .otherwise(function4);
+
+        // then
+        Assert.assertEquals(Integer.valueOf(1), testSubject.apply("a"));
+        Assert.assertEquals(Integer.valueOf(2), testSubject.apply("b"));
+        Assert.assertEquals(Integer.valueOf(3), testSubject.apply("c"));
+        Assert.assertEquals(Integer.valueOf(4), testSubject.apply("d"));
+        Assert.assertEquals(Integer.valueOf(4), testSubject.apply(null));
     }
 }
