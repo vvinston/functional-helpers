@@ -1,8 +1,7 @@
 package com.github.vvinston.functional;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class GuardedConsumer<T> implements Consumer<T> {
@@ -15,9 +14,9 @@ public class GuardedConsumer<T> implements Consumer<T> {
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final Consumer<T> success,
             @Nonnull final Consumer<T> fallback) {
-        this.clazz = Preconditions.checkNotNull(clazz);
-        this.success = Preconditions.checkNotNull(success);
-        this.fallback = Preconditions.checkNotNull(fallback);
+        this.clazz = Objects.requireNonNull(clazz);
+        this.success = Objects.requireNonNull(success);
+        this.fallback = Objects.requireNonNull(fallback);
     }
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
@@ -35,7 +34,7 @@ public class GuardedConsumer<T> implements Consumer<T> {
     }
 
     public static <T> GuardedConsumerBuilderStepOne doTry(@Nonnull final Consumer<T> success) {
-        return new GuardedConsumerBuilderStepOne(Preconditions.checkNotNull(success));
+        return new GuardedConsumerBuilderStepOne(Objects.requireNonNull(success));
     }
 
     public static class GuardedConsumerBuilderStepOne<T> {
@@ -43,11 +42,11 @@ public class GuardedConsumer<T> implements Consumer<T> {
         private final Consumer<T> success;
 
         public GuardedConsumerBuilderStepOne(@Nonnull final Consumer<T> success) {
-            this.success = Preconditions.checkNotNull(success);
+            this.success = Objects.requireNonNull(success);
         }
 
         public GuardedConsumerBuilderStepTwo<T> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
-            return new GuardedConsumerBuilderStepTwo(clazz, Preconditions.checkNotNull(success));
+            return new GuardedConsumerBuilderStepTwo(clazz, Objects.requireNonNull(success));
         }
     }
 
@@ -57,12 +56,12 @@ public class GuardedConsumer<T> implements Consumer<T> {
         private final Class<? extends RuntimeException> clazz;
 
         public GuardedConsumerBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final Consumer<T> success) {
-            this.clazz = Preconditions.checkNotNull(clazz);
-            this.success = Preconditions.checkNotNull(success);
+            this.clazz = Objects.requireNonNull(clazz);
+            this.success = Objects.requireNonNull(success);
         }
 
         public GuardedConsumer<T> fallbackTo(@Nonnull final Consumer<T> fallback) {
-            return new GuardedConsumer<>(clazz, success, Preconditions.checkNotNull(fallback));
+            return new GuardedConsumer<>(clazz, success, Objects.requireNonNull(fallback));
         }
     }
 }

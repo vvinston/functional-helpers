@@ -1,8 +1,7 @@
 package com.github.vvinston.functional;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
@@ -16,9 +15,9 @@ public class ConditionalBiFunction<T, U, R> implements BiFunction<T, U, R> {
             @Nonnull final BiPredicate<T, U> predicate,
             @Nonnull final BiFunction<T, U, R> success,
             @Nonnull final BiFunction<T, U, R> fail) {
-        this.predicate = Preconditions.checkNotNull(predicate);
-        this.success = Preconditions.checkNotNull(success);
-        this.fail = Preconditions.checkNotNull(fail);
+        this.predicate = Objects.requireNonNull(predicate);
+        this.success = Objects.requireNonNull(success);
+        this.fail = Objects.requireNonNull(fail);
     }
 
     @Override
@@ -27,7 +26,7 @@ public class ConditionalBiFunction<T, U, R> implements BiFunction<T, U, R> {
     }
 
     public static <T, U> ConditionalBiFunctionBuilderStepOne<T, U> when(@Nonnull final BiPredicate<T, U> predicate) {
-        return new ConditionalBiFunctionBuilderStepOne<>(Preconditions.checkNotNull(predicate));
+        return new ConditionalBiFunctionBuilderStepOne<>(Objects.requireNonNull(predicate));
     }
 
     public static final class ConditionalBiFunctionBuilderStepOne<T, U> {
@@ -35,12 +34,12 @@ public class ConditionalBiFunction<T, U, R> implements BiFunction<T, U, R> {
         private final BiPredicate<T, U> predicate;
 
         public ConditionalBiFunctionBuilderStepOne(@Nonnull final BiPredicate<T, U> predicate) {
-            this.predicate = Preconditions.checkNotNull(predicate);
+            this.predicate = Objects.requireNonNull(predicate);
         }
 
         @SuppressWarnings("PMD.AccessorClassGeneration")
         public <R> ConditionalBiFunctionBuilderStepTwo<T, U, R> then(@Nonnull final BiFunction<T, U, R> success) {
-            return new ConditionalBiFunctionBuilderStepTwo<>(predicate, Preconditions.checkNotNull(success));
+            return new ConditionalBiFunctionBuilderStepTwo<>(predicate, Objects.requireNonNull(success));
         }
     }
 
@@ -50,12 +49,12 @@ public class ConditionalBiFunction<T, U, R> implements BiFunction<T, U, R> {
         private final BiFunction<T, U, R> success;
 
         private ConditionalBiFunctionBuilderStepTwo(@Nonnull final BiPredicate<T, U> predicate, @Nonnull final BiFunction<T, U, R> success) {
-            this.predicate = Preconditions.checkNotNull(predicate);
-            this.success = Preconditions.checkNotNull(success);
+            this.predicate = Objects.requireNonNull(predicate);
+            this.success = Objects.requireNonNull(success);
         }
 
         public ConditionalBiFunction<T, U, R> otherwise(@Nonnull final BiFunction<T, U, R> fail) {
-            return new ConditionalBiFunction<>(predicate, success, Preconditions.checkNotNull(fail));
+            return new ConditionalBiFunction<>(predicate, success, Objects.requireNonNull(fail));
         }
     }
 }

@@ -1,10 +1,9 @@
 package com.github.vvinston.functional;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class RerunnableFunction<T, R> implements Function<T, R> {
@@ -13,8 +12,11 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
     private final int numberOfPossibleAttempts;
 
     public RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
-        Preconditions.checkArgument(numberOfPossibleAttempts >= 0, "Number of possible attempts can not be negative!");
-        this.function = Preconditions.checkNotNull(function);
+        if (numberOfPossibleAttempts < 0) {
+            throw new IllegalArgumentException("Number of possible attempts can not be negative!");
+        }
+
+        this.function = Objects.requireNonNull(function);
         this.numberOfPossibleAttempts = numberOfPossibleAttempts;
     }
 
@@ -37,14 +39,14 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
     }
 
     public static <T, R> RerunnableFunctionBuilderStepOne attempt(@Nonnull final Function<T, R> function) {
-        return new RerunnableFunctionBuilderStepOne(Preconditions.checkNotNull(function));
+        return new RerunnableFunctionBuilderStepOne(Objects.requireNonNull(function));
     }
 
     public static final class RerunnableFunctionBuilderStepOne<T, R> {
         private final Function<T, R> function;
 
         public RerunnableFunctionBuilderStepOne(@Nonnull final Function<T, R> function) {
-            this.function = Preconditions.checkNotNull(function);
+            this.function = Objects.requireNonNull(function);
         }
 
         public RerunnableFunction<T, R> times(final int numberOfPossibleAttempts) {

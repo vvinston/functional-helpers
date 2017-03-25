@@ -1,9 +1,8 @@
 package com.github.vvinston.functional;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
@@ -17,9 +16,9 @@ public class ConditionalBiConsumer<T, U> implements BiConsumer<T, U> {
             @Nonnull final BiPredicate<T, U> predicate,
             @Nonnull final BiConsumer<T, U> success,
             @Nonnull final BiConsumer<T, U> fail) {
-        this.predicate = Preconditions.checkNotNull(predicate);
-        this.success = Preconditions.checkNotNull(success);
-        this.fail = Preconditions.checkNotNull(fail);
+        this.predicate = Objects.requireNonNull(predicate);
+        this.success = Objects.requireNonNull(success);
+        this.fail = Objects.requireNonNull(fail);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class ConditionalBiConsumer<T, U> implements BiConsumer<T, U> {
     }
 
     public static <T, U> ConditionalBiConsumerBuilderStepOne<T, U> when(@Nonnull final BiPredicate<T, U> predicate) {
-        return new ConditionalBiConsumerBuilderStepOne<>(Preconditions.checkNotNull(predicate));
+        return new ConditionalBiConsumerBuilderStepOne<>(Objects.requireNonNull(predicate));
     }
 
     public static final class ConditionalBiConsumerBuilderStepOne<T, U> {
@@ -40,12 +39,12 @@ public class ConditionalBiConsumer<T, U> implements BiConsumer<T, U> {
         private final BiPredicate<T, U> predicate;
 
         public ConditionalBiConsumerBuilderStepOne(@Nonnull final BiPredicate<T, U> predicate) {
-            this.predicate = Preconditions.checkNotNull(predicate);
+            this.predicate = Objects.requireNonNull(predicate);
         }
 
         @SuppressWarnings("PMD.AccessorClassGeneration")
         public ConditionalBiConsumerBuilderStepTwo<T, U> then(@Nonnull final BiConsumer<T, U> success) {
-            return new ConditionalBiConsumerBuilderStepTwo<>(predicate, Preconditions.checkNotNull(success));
+            return new ConditionalBiConsumerBuilderStepTwo<>(predicate, Objects.requireNonNull(success));
         }
     }
 
@@ -55,12 +54,12 @@ public class ConditionalBiConsumer<T, U> implements BiConsumer<T, U> {
         private final BiConsumer<T, U> success;
 
         private ConditionalBiConsumerBuilderStepTwo(@Nonnull final BiPredicate<T, U> predicate, @Nonnull final BiConsumer<T, U> success) {
-            this.predicate = Preconditions.checkNotNull(predicate);
-            this.success = Preconditions.checkNotNull(success);
+            this.predicate = Objects.requireNonNull(predicate);
+            this.success = Objects.requireNonNull(success);
         }
 
         public ConditionalBiConsumer<T, U> otherwise(@Nonnull final BiConsumer<T, U> fail) {
-            return new ConditionalBiConsumer<>(predicate, success, Preconditions.checkNotNull(fail));
+            return new ConditionalBiConsumer<>(predicate, success, Objects.requireNonNull(fail));
         }
     }
 }

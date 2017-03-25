@@ -1,7 +1,5 @@
 package com.github.vvinston.functional;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,7 +12,7 @@ public class Left<L, R> implements Either<L, R>, Serializable {
     private final L payload;
 
     public Left(@Nonnull final L payload) {
-        this.payload = Preconditions.checkNotNull(payload);
+        this.payload = Objects.requireNonNull(payload);
     }
 
     @Override

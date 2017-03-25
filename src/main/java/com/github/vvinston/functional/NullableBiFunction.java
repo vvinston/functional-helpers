@@ -1,8 +1,7 @@
 package com.github.vvinston.functional;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -28,6 +27,6 @@ public class NullableBiFunction<T, U, R> implements BiFunction<T, U, R> {
             @Nonnull final BiFunction<T, U, Optional<R>> success,
             final R fallbackValue) {
         final BiFunction<T, U, R> fallback =  (input1, input2)  -> fallbackValue;
-        return new NullableBiFunction<>(Preconditions.checkNotNull(success), fallback);
+        return new NullableBiFunction<>(Objects.requireNonNull(success), fallback);
     }
 }
