@@ -183,6 +183,7 @@
                                     <element>BUNDLE</element>
                                     <excludes>
                                         <exclude>*Test</exclude>
+                                        <exclude>Functions</exclude>
                                     </excludes>
                                     <limits>
                                         <limit implementation="org.jacoco.report.check.Limit">

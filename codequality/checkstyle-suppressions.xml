@@ -7,4 +7,7 @@
     <suppress checks="JavadocType|JavadocMethod" files=".*Test.java" />
     <suppress checks="MethodCount|MethodLength|ParameterNumber|ExecutableStatementCount|FileLengthCheck" files=".*Test.java" />
     <suppress checks="MultipleStringLiterals|MagicNumber|OneStatementPerLine" files=".*Test.java" />
+
+    <!-- Facade util class -->
+    <suppress checks="MethodCount|ClassFanOutComplexity" files="Functions.java" />
 </suppressions>
