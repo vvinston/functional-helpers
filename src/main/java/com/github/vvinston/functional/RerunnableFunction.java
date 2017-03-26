@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class RerunnableFunction<T, R> implements Function<T, R> {
+final class RerunnableFunction<T, R> implements Function<T, R> {
 
     private final Function<T, R> function;
     private final int numberOfPossibleAttempts;
 
-    public RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
+    RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -36,21 +36,5 @@ public class RerunnableFunction<T, R> implements Function<T, R> {
         }
 
         throw new RerunnableException("Could not successfully run function!", exceptions);
-    }
-
-    public static <T, R> RerunnableFunctionBuilder attempt(@Nonnull final Function<T, R> function) {
-        return new RerunnableFunctionBuilder(Objects.requireNonNull(function));
-    }
-
-    public static final class RerunnableFunctionBuilder<T, R> {
-        private final Function<T, R> function;
-
-        public RerunnableFunctionBuilder(@Nonnull final Function<T, R> function) {
-            this.function = Objects.requireNonNull(function);
-        }
-
-        public RerunnableFunction<T, R> times(final int numberOfPossibleAttempts) {
-            return new RerunnableFunction<>(function, numberOfPossibleAttempts);
-        }
     }
 }

@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class RerunnableConsumer<T> implements Consumer<T> {
+final class RerunnableConsumer<T> implements Consumer<T> {
 
     private final Consumer<T> consumer;
     private final int numberOfPossibleAttempts;
 
-    public RerunnableConsumer(@Nonnull final Consumer<T> consumer, final int numberOfPossibleAttempts) {
+    RerunnableConsumer(@Nonnull final Consumer<T> consumer, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -36,21 +36,5 @@ public class RerunnableConsumer<T> implements Consumer<T> {
         }
 
         throw new RerunnableException("Could not successfully run consumer!", exceptions);
-    }
-
-    public static <T> RerunnableConsumerBuilder attempt(@Nonnull final Consumer<T> consumer) {
-        return new RerunnableConsumerBuilder(Objects.requireNonNull(consumer));
-    }
-
-    public static final class RerunnableConsumerBuilder<T> {
-        private final Consumer<T> consumer;
-
-        public RerunnableConsumerBuilder(@Nonnull final Consumer<T> consumer) {
-            this.consumer = Objects.requireNonNull(consumer);
-        }
-
-        public RerunnableConsumer<T> times(final int numberOfPossibleAttempts) {
-            return new RerunnableConsumer<>(consumer, numberOfPossibleAttempts);
-        }
     }
 }

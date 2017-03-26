@@ -37,7 +37,7 @@ public class NullableFunctionTest {
     @Test
     public void testWhenSuccessIsNullThenReturnWithConstantFallbackValue() {
         // given
-        final Function<Boolean, String> testSubject = NullableFunction.getFunctionWithConstantFallbackValue(success2, FALLBACK);
+        final Function<Boolean, String> testSubject = Functions.nullableWithFallbackValue(success2, FALLBACK);
 
         // then
         Assert.assertEquals(FALLBACK, testSubject.apply(true));

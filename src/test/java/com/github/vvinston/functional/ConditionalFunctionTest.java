@@ -26,7 +26,7 @@ public class ConditionalFunctionTest {
     @Test
     public void testHappyPath() {
         // given
-        final Function<Boolean, String> testSubject = ConditionalFunction
+        final Function<Boolean, String> testSubject = Functions
                 .when(predicate)
                 .then(success)
                 .otherwise(fail);
@@ -39,7 +39,7 @@ public class ConditionalFunctionTest {
     @Test
     public void testMultipleCases() {
         // given
-        final Function<String, Integer> testSubject = ConditionalFunction
+        final Function<String, Integer> testSubject = Functions
                 .when(predicate1).then(function1)
                 .when(predicate2).then(function2)
                 .when(predicate3).then(function3)

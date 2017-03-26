@@ -62,7 +62,7 @@ public class DeterministicFunctionTest {
     public void testFactoryReturnsConsistentValue() throws Exception {
         // given
         final String testInput = "test";
-        final Function<String, Long> testSubject = DeterministicFunction.getMapCachedFunction(nonDeterministic);
+        final Function<String, Long> testSubject = Functions.deterministic(nonDeterministic);
 
         // when
         final Long result1 = testSubject.apply(testInput);

@@ -32,11 +32,11 @@ public class CachedFunctionsPerformanceTest {
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                { "Deterministic::HashMap", DeterministicFunction.getMapCachedFunction(TEST_FUNCTION) },
+                { "Deterministic::HashMap", Functions.deterministic(TEST_FUNCTION) },
                 { "Deterministic::ConcurrentHashMap", new DeterministicFunction(new MapCache(new ConcurrentHashMap()), TEST_FUNCTION) },
                 { "Deterministic::IdentityHashMap", new DeterministicFunction(new MapCache(new IdentityHashMap()), TEST_FUNCTION) },
                 { "Deterministic::LinkedHashMap", new DeterministicFunction(new MapCache(new LinkedHashMap()), TEST_FUNCTION) },
-                { "MemoicFunction::HashMap", MemoicFunction.getMapCachedFunction(TEST_FUNCTION) },
+                { "MemoicFunction::HashMap", Functions.memoic(TEST_FUNCTION) },
                 { "MemoicFunction::ConcurrentHashMap", new MemoicFunction(new ConcurrentHashMap(), TEST_FUNCTION) },
                 { "MemoicFunction::IdentityHashMap", new MemoicFunction(new IdentityHashMap(), TEST_FUNCTION) },
                 { "MemoicFunction::LinkedHashMap", new MemoicFunction(new LinkedHashMap(), TEST_FUNCTION) },

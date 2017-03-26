@@ -184,6 +184,7 @@
                                     <excludes>
                                         <exclude>*Test</exclude>
                                         <exclude>Functions</exclude>
+                                        <exclude>Predicates</exclude>
                                     </excludes>
                                     <limits>
                                         <limit implementation="org.jacoco.report.check.Limit">

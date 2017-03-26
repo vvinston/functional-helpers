@@ -19,8 +19,8 @@ public class EitherFunctionTest {
     @Test
     public void testHappyPath() {
         // given
-        final Function<Boolean, Either<String, Integer>> testSubject = EitherFunction
-                .when(predicate)
+        final Function<Boolean, Either<String, Integer>> testSubject = Functions
+                .either(predicate)
                 .then(leftFunction)
                 .otherwise(rightFunction);
 

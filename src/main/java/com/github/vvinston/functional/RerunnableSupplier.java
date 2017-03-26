@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class RerunnableSupplier<T> implements Supplier<T> {
+final class RerunnableSupplier<T> implements Supplier<T> {
 
     private final Supplier<T> supplier;
     private final int numberOfPossibleAttempts;
 
-    public RerunnableSupplier(@Nonnull final Supplier<T> supplier, final int numberOfPossibleAttempts) {
+    RerunnableSupplier(@Nonnull final Supplier<T> supplier, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -36,21 +36,5 @@ public class RerunnableSupplier<T> implements Supplier<T> {
         }
 
         throw new RerunnableException("Could not successfully run supplier!", exceptions);
-    }
-
-    public static <T> RerunnableSupplierBuilder attempt(@Nonnull final Supplier<T> supplier) {
-        return new RerunnableSupplierBuilder(Objects.requireNonNull(supplier));
-    }
-
-    public static final class RerunnableSupplierBuilder<T> {
-        private final Supplier<T> supplier;
-
-        public RerunnableSupplierBuilder(@Nonnull final Supplier<T> supplier) {
-            this.supplier = Objects.requireNonNull(supplier);
-        }
-
-        public RerunnableSupplier<T> times(final int numberOfPossibleAttempts) {
-            return new RerunnableSupplier<>(supplier, numberOfPossibleAttempts);
-        }
     }
 }

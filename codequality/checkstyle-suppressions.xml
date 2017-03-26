@@ -9,5 +9,5 @@
     <suppress checks="MultipleStringLiterals|MagicNumber|OneStatementPerLine" files=".*Test.java" />
 
     <!-- Facade util class -->
-    <suppress checks="MethodCount|ClassFanOutComplexity" files="Functions.java" />
+    <suppress checks="MethodCount|ClassFanOutComplexity|ClassDataAbstractionCoupling" files="Functions.java" />
 </suppressions>

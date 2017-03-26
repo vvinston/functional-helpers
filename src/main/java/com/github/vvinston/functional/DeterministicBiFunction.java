@@ -1,16 +1,15 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-public class DeterministicBiFunction<T, U, R> implements BiFunction<T, U, R> {
+final class DeterministicBiFunction<T, U, R> implements BiFunction<T, U, R> {
 
     private final Cache<Tuple<T, U>, R> cache;
     private final BiFunction<T, U, R> function;
 
-    public DeterministicBiFunction(@Nonnull final Cache<Tuple<T, U>, R> cache, @Nonnull final BiFunction<T, U, R> function) {
+    DeterministicBiFunction(@Nonnull final Cache<Tuple<T, U>, R> cache, @Nonnull final BiFunction<T, U, R> function) {
         this.cache = Objects.requireNonNull(cache);
         this.function = Objects.requireNonNull(function);
     }
@@ -24,9 +23,5 @@ public class DeterministicBiFunction<T, U, R> implements BiFunction<T, U, R> {
         }
 
         return cache.get(key);
-    }
-
-    public static <T, U, R> DeterministicBiFunction<T, U, R> getMapCachedFunction(@Nonnull final BiFunction<T, U, R> function) {
-        return new DeterministicBiFunction<>(new MapCache<>(new HashMap<>()), Objects.requireNonNull(function));
     }
 }

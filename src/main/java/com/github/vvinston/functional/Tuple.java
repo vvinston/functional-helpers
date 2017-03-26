@@ -2,7 +2,7 @@ package com.github.vvinston.functional;
 
 import java.util.Objects;
 
-class Tuple<A, B> {
+public final class Tuple<A, B> {
 
     private final A first;
 

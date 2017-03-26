@@ -78,10 +78,10 @@ public class ConditionalBiConsumerTest {
         Mockito.verify(consumer3, Mockito.times(1)).accept(true, true);
     }
 
-    private ConditionalBiConsumer<Boolean, Boolean> givenTestSubject() {
-        return ConditionalBiConsumer
-                .when(predicate1).then(consumer1)
-                .when(predicate2).then(consumer2)
+    private BiConsumer<Boolean, Boolean> givenTestSubject() {
+        return Functions
+                .consumeWhen(predicate1).then(consumer1)
+                .consumeWhen(predicate2).then(consumer2)
                 .otherwise(consumer3);
     }
 }

@@ -4,7 +4,7 @@ Simple toolkit makes it easier to work with Java 8 function classes. This projec
 
 ## Usage
 
-The toolkit provides a facade class for the basic usage of the features, called _Functions_. Expect the extraordinary setups this util class is capable to create most of the necessary instances.   
+The toolkit provides two facade classes for the provide access to the features, called _Functions_ and _Predicates_. Setting up and decorating functions might be done by calling static methods on these. The implementation classes are not directly reachable.     
 
 ## Flavors
 
@@ -64,44 +64,45 @@ To make them interchangeable, similar way as it happens at [Google](https://gith
 ### Example 1: Having a bulletproof business function
 
 ```java
-final Function<String, String> businessFunction = ...;
-final Function<String, String> fallbackFunction = ...;
-final Function<String, String> decoratedFunction = GuardedFunction
-  .doTry(RerunnableFunction.attempt(businessFunction).times(3))
-  .inCaseOf(RerunnableException.class)
-  .fallbackTo(fallbackFunction);
-  
-final String result = decoratedFunction.apply("test");
+final int numberOfRetries = 3;
+final Function<String, String> businessFunction = i -> i;
+final Function<String, String> fallbackFunction = i -> i;
+final Function<String, String> composed = Functions
+        .doTry(Functions.attempt(businessFunction).times(numberOfRetries))
+        .inCaseOf(RerunnableException.class)
+        .fallbackTo(fallbackFunction);
+
+final String result = composed.apply("example");
 ```
 
 ### Example 2: Processing input using multiple steps
 
 ```java
-final Function<String, A> tokenize = ...;
-final Function<A, B> query = ...;
-final Function<B, C> extract = ...;
-final Function<C, Result> generate = ...;
-final Result defaultErrorMessage = ...;
+final int numberOfRetries = 3;
+final Function<String, Token> tokenize = i -> new Token();
+final Function<Token, Query> createQuery = i -> new Query();
+final Function<Query, Result> execute = i -> new Result();
+final Function<Result, Optional<Integer>> extract = i -> Optional.of(1);
 
-final Function<A, C> acquireExternalData = DeterministicFunction
-    .getMapCachedFunction(RerunnableFunction.attempt(query.andThen(extract)).times(3));
+final Function<String, Query> generateQuery = Functions.deterministic(tokenize.andThen(createQuery));
+final Function<Query, Result> guardedExecute = Functions
+        .doTry(Functions.attempt(execute).times(numberOfRetries))
+        .inCaseOf(RerunnableException.class)
+        .fallbackTo(i -> new Result());
+final Function<Result, Integer> guardedExtract = Functions.nullableWithFallbackValue(extract, 0);
 
-final Function<C, Result> guardedGenerate = NullableFunction
-    .getFunctionWithConstantFallbackValue(generate, defaultErrorMessage);
-
-final Result = acquireExternalData.andThen(tokenize).andThen(guardedGenerate).apply(input);
-
+final Function<String, Integer> acquireData = generateQuery.andThen(guardedExecute).andThen(guardedExtract);
 ```
 
 ### Example 3: Wrapping function around with predicate
 
 ```java
-final Function<A, Boolean> booleanFunction = ...;
-final Function<A, B> function1 = ...;
-final Function<A, B> function2 = ...;
+final Function<String, Boolean> function1 = i -> false;
+final Function<String, Integer> function2 = i -> 1;
+final Function<String, Integer> function3 = i -> 2;
 
-final Function<A, B> result = ConditionalFunction.when(Functions.predicateOf(booleanFunction))
-     .then(function1)
-     .otherwise(function2);
-
+final Function<String, Integer> composed = Functions
+        .when(Functions.predicateOf(function1))
+        .then(function2)
+        .otherwise(function3);
 ```

@@ -4,13 +4,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
 
-public class RerunnableException extends RuntimeException {
+public final class RerunnableException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
     private final List<RuntimeException> causes;
 
-    public RerunnableException(@Nonnull final String message, @Nonnull final List<RuntimeException> causes) {
+    RerunnableException(@Nonnull final String message, @Nonnull final List<RuntimeException> causes) {
         super(Objects.requireNonNull(message));
         this.causes = Objects.requireNonNull(causes);
     }

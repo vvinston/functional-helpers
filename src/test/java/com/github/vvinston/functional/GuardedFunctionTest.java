@@ -20,7 +20,7 @@ public class GuardedFunctionTest {
     @Test
     public void testSuccess() {
         // given
-        final Function<Boolean, String> testSubject = GuardedFunction.doTry(success1).inCaseOf(clazz).fallbackTo(fallback);
+        final Function<Boolean, String> testSubject = Functions.doTry(success1).inCaseOf(clazz).fallbackTo(fallback);
 
         // when
         final String result = testSubject.apply(true);
@@ -32,7 +32,7 @@ public class GuardedFunctionTest {
     @Test
     public void testFallback() {
         // given
-        final Function<Boolean, String> testSubject = GuardedFunction.doTry(success2).inCaseOf(clazz).fallbackTo(fallback);
+        final Function<Boolean, String> testSubject = Functions.doTry(success2).inCaseOf(clazz).fallbackTo(fallback);
 
         // when
         final String result = testSubject.apply(true);
@@ -44,7 +44,7 @@ public class GuardedFunctionTest {
     @Test(expected = NullPointerException.class)
     public void testFallbackWithUnexpectedException() {
         // given
-        final Function<Boolean, String> testSubject = GuardedFunction.doTry(success3).inCaseOf(clazz).fallbackTo(fallback);
+        final Function<Boolean, String> testSubject = Functions.doTry(success3).inCaseOf(clazz).fallbackTo(fallback);
 
         // when
         testSubject.apply(true);

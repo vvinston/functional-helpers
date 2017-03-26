@@ -78,10 +78,10 @@ public class ConditionalConsumerTest {
         Mockito.verify(consumer3, Mockito.times(1)).accept(false);
     }
 
-    private ConditionalConsumer<Boolean> givenTestSubject() {
-        return ConditionalConsumer
-                .when(predicate1).then(consumer1)
-                .when(predicate2).then(consumer2)
+    private Consumer<Boolean> givenTestSubject() {
+        return Functions
+                .consumeWhen(predicate1).then(consumer1)
+                .consumeWhen(predicate2).then(consumer2)
                 .otherwise(consumer3);
     }
 }

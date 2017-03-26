@@ -26,7 +26,7 @@ public class ConditionalBiFunctionTest {
     @Test
     public void testHappyPath() {
         // given
-        final BiFunction<Boolean, Boolean, String> testSubject = ConditionalBiFunction
+        final BiFunction<Boolean, Boolean, String> testSubject = Functions
                 .when(predicate)
                 .then(success)
                 .otherwise(fail);
@@ -39,7 +39,7 @@ public class ConditionalBiFunctionTest {
     @Test
     public void testMultipleCases() {
         // given
-        final BiFunction<Boolean, Boolean, Integer> testSubject = ConditionalBiFunction
+        final BiFunction<Boolean, Boolean, Integer> testSubject = Functions
                 .when(predicate1).then(function1)
                 .when(predicate2).then(function2)
                 .when(predicate3).then(function3)

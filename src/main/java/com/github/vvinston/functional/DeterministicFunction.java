@@ -1,16 +1,15 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class DeterministicFunction<T, R> implements Function<T, R> {
+final class DeterministicFunction<T, R> implements Function<T, R> {
 
     private final Cache<T, R> cache;
     private final Function<T, R> function;
 
-    public DeterministicFunction(@Nonnull final Cache<T, R> cache, @Nonnull final Function<T, R> function) {
+    DeterministicFunction(@Nonnull final Cache<T, R> cache, @Nonnull final Function<T, R> function) {
         this.cache = Objects.requireNonNull(cache);
         this.function = Objects.requireNonNull(function);
     }
@@ -22,10 +21,6 @@ public class DeterministicFunction<T, R> implements Function<T, R> {
         }
 
         return cache.get(input);
-    }
-
-    public static <T, R> DeterministicFunction<T, R> getMapCachedFunction(@Nonnull final Function<T, R> function) {
-        return new DeterministicFunction<>(new MapCache<>(new HashMap<>()), Objects.requireNonNull(function));
     }
 }
 
