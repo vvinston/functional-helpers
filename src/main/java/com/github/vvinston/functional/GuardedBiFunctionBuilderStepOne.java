@@ -12,6 +12,6 @@ public final class GuardedBiFunctionBuilderStepOne<T, U, R> {
     }
 
     public GuardedBiFunctionBuilderStepTwo<T, U, R> inCase(@Nonnull final Class<? extends RuntimeException> clazz) {
-        return new GuardedBiFunctionBuilderStepTwo<T, U, R>(success, clazz);
+        return new GuardedBiFunctionBuilderStepTwo<>(success, clazz);
     }
 }

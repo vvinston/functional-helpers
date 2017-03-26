@@ -13,6 +13,6 @@ public final class GuardedSupplierBuilderStepOne<T> {
     }
 
     public GuardedSupplierBuilderStepTwo<T> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
-        return new GuardedSupplierBuilderStepTwo(clazz, Objects.requireNonNull(success));
+        return new GuardedSupplierBuilderStepTwo<>(clazz, Objects.requireNonNull(success));
     }
 }

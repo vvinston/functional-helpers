@@ -13,6 +13,6 @@ public final class GuardedBiConsumerBuilderStepOne<T, U> {
     }
 
     public GuardedBiConsumerBuilderStepTwo<T, U> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
-        return new GuardedBiConsumerBuilderStepTwo(clazz, Objects.requireNonNull(success));
+        return new GuardedBiConsumerBuilderStepTwo<>(clazz, Objects.requireNonNull(success));
     }
 }

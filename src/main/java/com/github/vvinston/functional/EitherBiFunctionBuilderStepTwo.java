@@ -15,7 +15,7 @@ public final class EitherBiFunctionBuilderStepTwo<T, U, R1> {
         this.leftFunction = Objects.requireNonNull(leftFunction);
     }
 
-    public <R2> EitherBiFunction<T, U, R1, R2> otherwise(@Nonnull final BiFunction<T, U, R2> rightFunction) {
+    public <R2> BiFunction<T, U, Either<R1, R2>> otherwise(@Nonnull final BiFunction<T, U, R2> rightFunction) {
         return new EitherBiFunction<>(predicate, leftFunction, Objects.requireNonNull(rightFunction));
     }
 }

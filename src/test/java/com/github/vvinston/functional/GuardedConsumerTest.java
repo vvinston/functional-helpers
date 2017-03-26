@@ -24,6 +24,7 @@ public class GuardedConsumerTest {
     @Test
     public void testSuccess() {
         // given
+        @SuppressWarnings("unchecked")
         final Consumer<String> testSubject = Functions.doTry(success).inCaseOf(clazz).fallbackTo(fallback);
 
         // when
@@ -37,6 +38,7 @@ public class GuardedConsumerTest {
     @Test
     public void testFallback() {
         // given
+        @SuppressWarnings("unchecked")
         final Consumer<String> testSubject = Functions.doTry(success).inCaseOf(clazz).fallbackTo(fallback);
         Mockito.doThrow(IllegalArgumentException.class).when(success).accept(Mockito.anyString());
 
@@ -51,6 +53,7 @@ public class GuardedConsumerTest {
     @Test(expected = NullPointerException.class)
     public void testFallbackWithUnexpectedException() {
         // given
+        @SuppressWarnings("unchecked")
         final Consumer<String> testSubject = Functions.doTry(success).inCaseOf(clazz).fallbackTo(fallback);
         Mockito.doThrow(NullPointerException.class).when(success).accept(Mockito.anyString());
 

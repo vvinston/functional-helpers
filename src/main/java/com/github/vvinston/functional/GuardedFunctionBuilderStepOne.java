@@ -13,6 +13,6 @@ public final class GuardedFunctionBuilderStepOne<T, R> {
     }
 
     public GuardedFunctionBuilderStepTwo<T, R> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
-        return new GuardedFunctionBuilderStepTwo(clazz, Objects.requireNonNull(success));
+        return new GuardedFunctionBuilderStepTwo<>(clazz, Objects.requireNonNull(success));
     }
 }

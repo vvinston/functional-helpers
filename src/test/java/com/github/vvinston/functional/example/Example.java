@@ -14,6 +14,7 @@ public class Example {
         final int numberOfRetries = 3;
         final Function<String, String> businessFunction = i -> i;
         final Function<String, String> fallbackFunction = i -> i;
+        @SuppressWarnings("unchecked")
         final Function<String, String> composed = Functions
                 .doTry(Functions.attempt(businessFunction).times(numberOfRetries))
                 .inCaseOf(RerunnableException.class)
@@ -29,12 +30,14 @@ public class Example {
         final Function<Token, Query> createQuery = i -> new Query();
         final Function<Query, Result> execute = i -> new Result();
         final Function<Result, Optional<Integer>> extract = i -> Optional.of(1);
+        final Function<Query, Result> fallback = i -> new Result();
 
         final Function<String, Query> generateQuery = Functions.deterministic(tokenize.andThen(createQuery));
+        @SuppressWarnings("unchecked")
         final Function<Query, Result> guardedExecute = Functions
                 .doTry(Functions.attempt(execute).times(numberOfRetries))
                 .inCaseOf(RerunnableException.class)
-                .fallbackTo(i -> new Result());
+                .fallbackTo(fallback);
         final Function<Result, Integer> guardedExtract = Functions.nullableWithFallbackValue(extract, 0);
 
         final Function<String, Integer> acquireData = generateQuery.andThen(guardedExecute).andThen(guardedExtract);

@@ -13,6 +13,6 @@ public final class GuardedConsumerBuilderStepOne<T> {
     }
 
     public GuardedConsumerBuilderStepTwo<T> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
-        return new GuardedConsumerBuilderStepTwo(clazz, Objects.requireNonNull(success));
+        return new GuardedConsumerBuilderStepTwo<>(clazz, Objects.requireNonNull(success));
     }
 }

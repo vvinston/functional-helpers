@@ -54,10 +54,10 @@ The following table shows the support of the different flavors and interfaces:
 
 To make them interchangeable, similar way as it happens at [Google](https://github.com/google/guava/blob/master/guava/src/com/google/common/base/Functions.java) with their function implementation, this toolbox provides support to wrap Predicate into Function and the way back. This works both way with one and two argument versions of them. The following mappings are possible:
 
-- Function -> Preditace
-- Preditace -> Function
-- BiFunction -> BiPreditace
-- BiPreditace -> BiFunction
+- Function -> Predicate
+- Predicate -> Function
+- BiFunction -> BiPredicate
+- BiPredicate -> BiFunction
 
 ## Examples
 

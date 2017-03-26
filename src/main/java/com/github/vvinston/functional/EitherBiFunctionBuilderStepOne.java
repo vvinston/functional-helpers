@@ -14,6 +14,6 @@ public final class EitherBiFunctionBuilderStepOne<T, U> {
     }
 
     public <R1> EitherBiFunctionBuilderStepTwo<T, U, R1> then(@Nonnull final BiFunction<T, U, R1> success) {
-        return new EitherBiFunctionBuilderStepTwo<T, U, R1>(predicate, Objects.requireNonNull(success));
+        return new EitherBiFunctionBuilderStepTwo<>(predicate, Objects.requireNonNull(success));
     }
 }

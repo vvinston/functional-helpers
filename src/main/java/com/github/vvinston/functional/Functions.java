@@ -45,7 +45,7 @@ public final class Functions {
     }
 
     public static <T, R> Function<T, R> deterministic(@Nonnull final Function<T, R> function) {
-        return deterministic(function, () -> new HashMap<>());
+        return deterministic(function, HashMap::new);
     }
 
     public static <T, R> Function<T, R> deterministic(@Nonnull final Function<T, R> function, @Nonnull final Supplier<Map<T, R>> supplier) {
@@ -53,7 +53,7 @@ public final class Functions {
     }
 
     public static <T, R> Function<T, R> deterministic(@Nonnull final Function<T, R> function, @Nonnull final Cache<T, R> cache) {
-        return new DeterministicFunction(cache, function);
+        return new DeterministicFunction<>(cache, function);
     }
 
     public static <T, U, R> BiFunction<T, U, R> deterministic(@Nonnull final BiFunction<T, U, R> function) {
@@ -66,8 +66,8 @@ public final class Functions {
         return new DeterministicBiFunction<>(new MapCache<>(supplier.get()), Objects.requireNonNull(function));
     }
 
-    public static <T, U, R> BiFunction<T, U, R> deterministic(@Nonnull final BiFunction<T, U, R> function, @Nonnull final Cache<T, R> cache) {
-        return new DeterministicBiFunction(cache, function);
+    public static <T, U, R> BiFunction<T, U, R> deterministic(@Nonnull final BiFunction<T, U, R> function, @Nonnull final Cache<Tuple<T, U>, R> cache) {
+        return new DeterministicBiFunction<>(cache, function);
     }
 
     public static <T, R> Function<T, R> memoic(@Nonnull final Function<T, R> function) {
@@ -75,43 +75,43 @@ public final class Functions {
     }
 
     public static <T, R> GuardedFunctionBuilderStepOne doTry(@Nonnull final Function<T, R> success) {
-        return new GuardedFunctionBuilderStepOne(Objects.requireNonNull(success));
+        return new GuardedFunctionBuilderStepOne<>(Objects.requireNonNull(success));
     }
 
     public static <T, U, R> GuardedBiFunctionBuilderStepOne doTry(@Nonnull final BiFunction<T, U, R> success) {
-        return new GuardedBiFunctionBuilderStepOne(Objects.requireNonNull(success));
+        return new GuardedBiFunctionBuilderStepOne<>(Objects.requireNonNull(success));
     }
 
     public static <T> GuardedConsumerBuilderStepOne doTry(@Nonnull final Consumer<T> success) {
-        return new GuardedConsumerBuilderStepOne(Objects.requireNonNull(success));
+        return new GuardedConsumerBuilderStepOne<>(Objects.requireNonNull(success));
     }
 
     public static <T, U> GuardedBiConsumerBuilderStepOne doTry(@Nonnull final BiConsumer<T, U> success) {
-        return new GuardedBiConsumerBuilderStepOne(Objects.requireNonNull(success));
+        return new GuardedBiConsumerBuilderStepOne<>(Objects.requireNonNull(success));
     }
 
     public static <T> GuardedSupplierBuilderStepOne doTry(@Nonnull final Supplier<T> success) {
-        return new GuardedSupplierBuilderStepOne(Objects.requireNonNull(success));
+        return new GuardedSupplierBuilderStepOne<>(Objects.requireNonNull(success));
     }
 
     public static <T, R> RerunnableFunctionBuilder attempt(@Nonnull final Function<T, R> function) {
-        return new RerunnableFunctionBuilder(Objects.requireNonNull(function));
+        return new RerunnableFunctionBuilder<>(Objects.requireNonNull(function));
     }
 
     public static <T, U, R> RerunnableBiFunctionBuilder attempt(@Nonnull final BiFunction<T, U, R> function) {
-        return new RerunnableBiFunctionBuilder(Objects.requireNonNull(function));
+        return new RerunnableBiFunctionBuilder<>(Objects.requireNonNull(function));
     }
 
     public static <T> RerunnableConsumerBuilder attempt(@Nonnull final Consumer<T> consumer) {
-        return new RerunnableConsumerBuilder(Objects.requireNonNull(consumer));
+        return new RerunnableConsumerBuilder<>(Objects.requireNonNull(consumer));
     }
 
     public static <T, U> RerunnableBiConsumerBuilder attempt(@Nonnull final BiConsumer<T, U> consumer) {
-        return new RerunnableBiConsumerBuilder(Objects.requireNonNull(consumer));
+        return new RerunnableBiConsumerBuilder<>(Objects.requireNonNull(consumer));
     }
 
     public static <T> RerunnableSupplierBuilder attempt(@Nonnull final Supplier<T> supplier) {
-        return new RerunnableSupplierBuilder(Objects.requireNonNull(supplier));
+        return new RerunnableSupplierBuilder<>(Objects.requireNonNull(supplier));
     }
 
     public static <T> Predicate<T> predicateOf(@Nonnull final Function<T, Boolean> function) {

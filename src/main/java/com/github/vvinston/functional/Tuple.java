@@ -8,7 +8,7 @@ public final class Tuple<A, B> {
 
     private final B second;
 
-    Tuple(final A first, final B second) {
+    private Tuple(final A first, final B second) {
         this.first = first;
         this.second = second;
     }

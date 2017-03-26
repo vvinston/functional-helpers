@@ -15,9 +15,9 @@ public class ConditionalFunctionTest {
     private final Function<Boolean, String> success = input -> SUCCESS;
     private final Function<Boolean, String> fail = input -> FAIL;
 
-    private final Predicate<String> predicate1 = input -> "a".equals(input);
-    private final Predicate<String> predicate2 = input -> "b".equals(input);
-    private final Predicate<String> predicate3 = input -> "c".equals(input);
+    private final Predicate<String> predicate1 = "a"::equals;
+    private final Predicate<String> predicate2 = "b"::equals;
+    private final Predicate<String> predicate3 = "c"::equals;
     private final Function<String, Integer> function1 = input -> 1;
     private final Function<String, Integer> function2 = input -> 2;
     private final Function<String, Integer> function3 = input -> 3;

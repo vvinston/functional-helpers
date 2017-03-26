@@ -26,6 +26,7 @@ public class RerunnableFunctionTest {
     @Test
     public void testSuccessfulRunningWillReturnWithResult() {
         // given
+        @SuppressWarnings("unchecked")
         final Function<Boolean, String> testSubject = Functions.attempt(function).times(1);
         Mockito.when(function.apply(Mockito.anyBoolean())).thenReturn(SUCCESS);
 
@@ -36,6 +37,7 @@ public class RerunnableFunctionTest {
     @Test
     public void testAfterSuccessfulAttemptWillReturnWithResult() {
         // given
+        @SuppressWarnings("unchecked")
         final Function<Boolean, String> testSubject = Functions.attempt(function).times(2);
         Mockito.when(function.apply(Mockito.anyBoolean())).thenThrow(new IllegalArgumentException()).thenReturn(SUCCESS);
 
@@ -47,6 +49,7 @@ public class RerunnableFunctionTest {
     @SuppressWarnings("checkstyle:illegalcatch")
     public void testZeroTimesWillNotCallDecorated() {
         // given
+        @SuppressWarnings("unchecked")
         final Function<Boolean, String> testSubject = Functions.attempt(function).times(0);
 
         // when
@@ -66,6 +69,7 @@ public class RerunnableFunctionTest {
     public void testExpectedNumberOfTriesWillBeExecuted() {
         // given
         final int numberOfAttempts = 5;
+        @SuppressWarnings("unchecked")
         final Function<Boolean, String> testSubject = Functions.attempt(function).times(numberOfAttempts);
         Mockito.when(function.apply(Mockito.anyBoolean())).thenThrow(new IllegalArgumentException());
 
