@@ -1,17 +1,18 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-final class RerunnableBiConsumer<T, U> implements BiConsumer<T, U> {
+final class RerunnableBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
 
-    private final BiConsumer<T, U> consumer;
+    private final BiConsumer<INPUT1, INPUT2> consumer;
     private final int numberOfPossibleAttempts;
 
-    RerunnableBiConsumer(@Nonnull final BiConsumer<T, U> consumer, final int numberOfPossibleAttempts) {
+    RerunnableBiConsumer(@Nonnull final BiConsumer<INPUT1, INPUT2> consumer, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -22,7 +23,7 @@ final class RerunnableBiConsumer<T, U> implements BiConsumer<T, U> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public void accept(final T input1, final U input2) {
+    public void accept(@Nullable final INPUT1 input1, @Nullable final INPUT2 input2) {
         final List<RuntimeException> exceptions = new ArrayList<>();
         int numberOfAttempts = 0;
 

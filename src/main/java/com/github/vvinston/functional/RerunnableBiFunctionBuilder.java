@@ -4,14 +4,14 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-public final class RerunnableBiFunctionBuilder<T, U, R> {
-    private final BiFunction<T, U, R> function;
+public final class RerunnableBiFunctionBuilder<INPUT1, INPUT2, RESULT> {
+    private final BiFunction<INPUT1, INPUT2, RESULT> function;
 
-    RerunnableBiFunctionBuilder(@Nonnull final BiFunction<T, U, R> function) {
+    RerunnableBiFunctionBuilder(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> function) {
         this.function = Objects.requireNonNull(function);
     }
 
-    public BiFunction<T, U, R> times(final int numberOfPossibleAttempts) {
+    public BiFunction<INPUT1, INPUT2, RESULT> times(final int numberOfPossibleAttempts) {
         return new RerunnableBiFunction<>(function, numberOfPossibleAttempts);
     }
 }

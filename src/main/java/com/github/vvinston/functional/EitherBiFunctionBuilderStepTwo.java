@@ -5,17 +5,17 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-public final class EitherBiFunctionBuilderStepTwo<T, U, R1> {
+public final class EitherBiFunctionBuilderStepTwo<INPUT1, INPUT2, RESULT1> {
 
-    private final BiPredicate<T, U> predicate;
-    private final BiFunction<T, U, R1> leftFunction;
+    private final BiPredicate<INPUT1, INPUT2> predicate;
+    private final BiFunction<INPUT1, INPUT2, RESULT1> leftFunction;
 
-    EitherBiFunctionBuilderStepTwo(@Nonnull final BiPredicate<T, U> predicate, @Nonnull final BiFunction<T, U, R1> leftFunction) {
+    EitherBiFunctionBuilderStepTwo(@Nonnull final BiPredicate<INPUT1, INPUT2> predicate, @Nonnull final BiFunction<INPUT1, INPUT2, RESULT1> leftFunction) {
         this.predicate = Objects.requireNonNull(predicate);
         this.leftFunction = Objects.requireNonNull(leftFunction);
     }
 
-    public <R2> BiFunction<T, U, Either<R1, R2>> otherwise(@Nonnull final BiFunction<T, U, R2> rightFunction) {
+    public <RESULT2> BiFunction<INPUT1, INPUT2, Either<RESULT1, RESULT2>> otherwise(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT2> rightFunction) {
         return new EitherBiFunction<>(predicate, leftFunction, Objects.requireNonNull(rightFunction));
     }
 }

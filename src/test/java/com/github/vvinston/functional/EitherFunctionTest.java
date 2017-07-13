@@ -19,10 +19,8 @@ public class EitherFunctionTest {
     @Test
     public void testHappyPath() {
         // given
-        final Function<Boolean, Either<String, Integer>> testSubject = Functions
-                .either(predicate)
-                .then(leftFunction)
-                .otherwise(rightFunction);
+        final Function<Boolean, Either<String, Integer>> testSubject
+                = new EitherFunction<>(predicate, leftFunction, rightFunction);
 
         // then
         Assert.assertEquals(Optional.of(LEFT_RESULT), testSubject.apply(true).getLeft());

@@ -5,21 +5,21 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class ConditionalConsumerBuilderStepThree<T> {
+public final class ConditionalConsumerBuilderStepThree<INPUT> {
 
-    private final Predicate<T> predicate;
-    private final List<Tuple<Predicate<T>, Consumer<T>>> cases;
+    private final Predicate<INPUT> predicate;
+    private final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases;
 
     ConditionalConsumerBuilderStepThree(
-            @Nonnull final Predicate<T> predicate,
-            @Nonnull final List<Tuple<Predicate<T>, Consumer<T>>> cases) {
+            @Nonnull final Predicate<INPUT> predicate,
+            @Nonnull final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases) {
         this.cases = cases;
         this.predicate = predicate;
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")
-    public ConditionalConsumerBuilderStepTwo<T> then(@Nonnull final Consumer<T> success) {
-        cases.add(Tuple.of(predicate, success));
+    public ConditionalConsumerBuilderStepTwo<INPUT> then(@Nonnull final Consumer<INPUT> success) {
+        cases.add(SimpleTuple.of(predicate, success));
         return new ConditionalConsumerBuilderStepTwo<>(cases);
     }
 }

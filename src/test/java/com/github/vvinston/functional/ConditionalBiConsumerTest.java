@@ -7,6 +7,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
@@ -79,9 +81,9 @@ public class ConditionalBiConsumerTest {
     }
 
     private BiConsumer<Boolean, Boolean> givenTestSubject() {
-        return Functions
-                .consumeWhen(predicate1).then(consumer1)
-                .consumeWhen(predicate2).then(consumer2)
-                .otherwise(consumer3);
+        final List<Tuple<BiPredicate<Boolean, Boolean>, BiConsumer<Boolean, Boolean>>> cases = new ArrayList<>();
+        cases.add(SimpleTuple.of(predicate1, consumer1));
+        cases.add(SimpleTuple.of(predicate2, consumer2));
+        return new ConditionalBiConsumer<>(cases, consumer3);
     }
 }

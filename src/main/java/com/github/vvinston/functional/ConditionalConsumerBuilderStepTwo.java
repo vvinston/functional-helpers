@@ -6,19 +6,19 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class ConditionalConsumerBuilderStepTwo<T> {
+public final class ConditionalConsumerBuilderStepTwo<INPUT> {
 
-    private final List<Tuple<Predicate<T>, Consumer<T>>> cases;
+    private final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases;
 
-    ConditionalConsumerBuilderStepTwo(@Nonnull final List<Tuple<Predicate<T>, Consumer<T>>> cases) {
+    ConditionalConsumerBuilderStepTwo(@Nonnull final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases) {
         this.cases = Objects.requireNonNull(cases);
     }
 
-    public ConditionalConsumerBuilderStepThree<T> consumeWhen(@Nonnull final Predicate<T> predicate) {
+    public ConditionalConsumerBuilderStepThree<INPUT> consumeWhen(@Nonnull final Predicate<INPUT> predicate) {
         return new ConditionalConsumerBuilderStepThree<>(Objects.requireNonNull(predicate), cases);
     }
 
-    public Consumer<T> otherwise(@Nonnull final Consumer<T> otherwise) {
+    public Consumer<INPUT> otherwise(@Nonnull final Consumer<INPUT> otherwise) {
         return new ConditionalConsumer<>(cases, Objects.requireNonNull(otherwise));
     }
 }

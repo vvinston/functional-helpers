@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class ConditionalConsumerBuilderStepOne<T> {
+public final class ConditionalConsumerBuilderStepOne<INPUT> {
 
-    private final Predicate<T> predicate;
+    private final Predicate<INPUT> predicate;
 
-    ConditionalConsumerBuilderStepOne(@Nonnull final Predicate<T> predicate) {
+    ConditionalConsumerBuilderStepOne(@Nonnull final Predicate<INPUT> predicate) {
         this.predicate = Objects.requireNonNull(predicate);
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")
-    public ConditionalConsumerBuilderStepTwo<T> then(@Nonnull final Consumer<T> success) {
-        final List<Tuple<Predicate<T>, Consumer<T>>> cases = new LinkedList<>();
-        cases.add(Tuple.of(predicate, success));
+    public ConditionalConsumerBuilderStepTwo<INPUT> then(@Nonnull final Consumer<INPUT> success) {
+        final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases = new LinkedList<>();
+        cases.add(SimpleTuple.of(predicate, success));
         return new ConditionalConsumerBuilderStepTwo<>(cases);
     }
 }

@@ -5,16 +5,16 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public final class EitherFunctionBuilderStepOne<T> {
+public final class EitherFunctionBuilderStepOne<INPUT> {
 
-    private final Predicate<T> predicate;
+    private final Predicate<INPUT> predicate;
 
-    public EitherFunctionBuilderStepOne(@Nonnull final Predicate<T> predicate) {
+    public EitherFunctionBuilderStepOne(@Nonnull final Predicate<INPUT> predicate) {
         this.predicate = Objects.requireNonNull(predicate);
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")
-    public <R1> EitherFunctionBuilderStepTwo<T, R1> then(@Nonnull final Function<T, R1> success) {
+    public <RESULT1> EitherFunctionBuilderStepTwo<INPUT, RESULT1> then(@Nonnull final Function<INPUT, RESULT1> success) {
         return new EitherFunctionBuilderStepTwo<>(predicate, Objects.requireNonNull(success));
     }
 }

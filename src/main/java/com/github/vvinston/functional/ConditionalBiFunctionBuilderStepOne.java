@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-public final class ConditionalBiFunctionBuilderStepOne<T, U> {
+public final class ConditionalBiFunctionBuilderStepOne<INPUT1, INPUT2> {
 
-    private final BiPredicate<T, U> predicate;
+    private final BiPredicate<INPUT1, INPUT2> predicate;
 
-    ConditionalBiFunctionBuilderStepOne(@Nonnull final BiPredicate<T, U> predicate) {
+    ConditionalBiFunctionBuilderStepOne(@Nonnull final BiPredicate<INPUT1, INPUT2> predicate) {
         this.predicate = Objects.requireNonNull(predicate);
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")
-    public <R> ConditionalBiFunctionBuilderStepTwo<T, U, R> then(@Nonnull final BiFunction<T, U, R> success) {
-        final List<Tuple<BiPredicate<T, U>, BiFunction<T, U, R>>> cases = new LinkedList<>();
-        cases.add(Tuple.of(predicate, Objects.requireNonNull(success)));
+    public <RESULT> ConditionalBiFunctionBuilderStepTwo<INPUT1, INPUT2, RESULT> then(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> success) {
+        final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiFunction<INPUT1, INPUT2, RESULT>>> cases = new LinkedList<>();
+        cases.add(SimpleTuple.of(predicate, Objects.requireNonNull(success)));
         return new ConditionalBiFunctionBuilderStepTwo<>(cases);
     }
 }

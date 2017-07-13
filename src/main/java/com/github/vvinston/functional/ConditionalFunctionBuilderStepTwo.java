@@ -6,19 +6,19 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public final class ConditionalFunctionBuilderStepTwo<T, R> {
+public final class ConditionalFunctionBuilderStepTwo<INPUT, RESULT> {
 
-    private final List<Tuple<Predicate<T>, Function<T, R>>> cases;
+    private final List<Tuple<Predicate<INPUT>, Function<INPUT, RESULT>>> cases;
 
-    ConditionalFunctionBuilderStepTwo(@Nonnull final List<Tuple<Predicate<T>, Function<T, R>>> cases) {
+    ConditionalFunctionBuilderStepTwo(@Nonnull final List<Tuple<Predicate<INPUT>, Function<INPUT, RESULT>>> cases) {
         this.cases = Objects.requireNonNull(cases);
     }
 
-    public ConditionalFunctionBuilderStepThree<T, R> when(@Nonnull final Predicate<T> predicate) {
+    public ConditionalFunctionBuilderStepThree<INPUT, RESULT> when(@Nonnull final Predicate<INPUT> predicate) {
         return new ConditionalFunctionBuilderStepThree<>(Objects.requireNonNull(predicate), cases);
     }
 
-    public Function<T, R> otherwise(@Nonnull final Function<T, R> otherwise) {
+    public Function<INPUT, RESULT> otherwise(@Nonnull final Function<INPUT, RESULT> otherwise) {
         return new ConditionalFunction<>(cases, Objects.requireNonNull(otherwise));
     }
 }

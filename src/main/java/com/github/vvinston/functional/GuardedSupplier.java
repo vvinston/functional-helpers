@@ -4,16 +4,16 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-final class GuardedSupplier<T> implements Supplier<T> {
+final class GuardedSupplier<RESULT> implements Supplier<RESULT> {
 
     private final Class<? extends RuntimeException> clazz;
-    private final Supplier<T> success;
-    private final Supplier<T> fallback;
+    private final Supplier<RESULT> success;
+    private final Supplier<RESULT> fallback;
 
     GuardedSupplier(
             @Nonnull final Class<? extends RuntimeException> clazz,
-            @Nonnull final Supplier<T> success,
-            @Nonnull final Supplier<T> fallback) {
+            @Nonnull final Supplier<RESULT> success,
+            @Nonnull final Supplier<RESULT> fallback) {
         this.clazz = Objects.requireNonNull(clazz);
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
@@ -21,7 +21,7 @@ final class GuardedSupplier<T> implements Supplier<T> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public T get() {
+    public RESULT get() {
         try {
             return success.get();
         } catch (final RuntimeException exception) {

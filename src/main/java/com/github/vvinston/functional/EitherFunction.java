@@ -1,27 +1,28 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class EitherFunction<T, R1, R2> implements Function<T, Either<R1, R2>> {
+final class EitherFunction<INPUT, RESULT1, RESULT2> implements Function<INPUT, Either<RESULT1, RESULT2>> {
 
-    private final Predicate<T> predicate;
-    private final Function<T, R1> leftFunction;
-    private final Function<T, R2> rightFunction;
+    private final Predicate<INPUT> predicate;
+    private final Function<INPUT, RESULT1> leftFunction;
+    private final Function<INPUT, RESULT2> rightFunction;
 
     EitherFunction(
-            @Nonnull final Predicate<T> predicate,
-            @Nonnull final Function<T, R1> leftFunction,
-            @Nonnull final Function<T, R2> rightFunction) {
+            @Nonnull final Predicate<INPUT> predicate,
+            @Nonnull final Function<INPUT, RESULT1> leftFunction,
+            @Nonnull final Function<INPUT, RESULT2> rightFunction) {
         this.predicate = Objects.requireNonNull(predicate);
         this.leftFunction = Objects.requireNonNull(leftFunction);
         this.rightFunction = Objects.requireNonNull(rightFunction);
     }
 
     @Override
-    public Either<R1, R2> apply(final T input) {
+    public Either<RESULT1, RESULT2> apply(@Nullable final INPUT input) {
         return predicate.test(input)
                 ? Either.left(leftFunction.apply(input))
                 : Either.right(rightFunction.apply(input));

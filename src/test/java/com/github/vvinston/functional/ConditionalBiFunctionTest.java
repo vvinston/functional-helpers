@@ -3,6 +3,8 @@ package com.github.vvinston.functional;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
@@ -26,10 +28,9 @@ public class ConditionalBiFunctionTest {
     @Test
     public void testHappyPath() {
         // given
-        final BiFunction<Boolean, Boolean, String> testSubject = Functions
-                .when(predicate)
-                .then(success)
-                .otherwise(fail);
+        final List<Tuple<BiPredicate<Boolean, Boolean>, BiFunction<Boolean, Boolean, String>>> cases = new ArrayList<>();
+        cases.add(SimpleTuple.of(predicate, success));
+        final BiFunction<Boolean, Boolean, String> testSubject = new ConditionalBiFunction<>(cases, fail);
 
         // then
         Assert.assertEquals(SUCCESS, testSubject.apply(true, true));
@@ -39,11 +40,11 @@ public class ConditionalBiFunctionTest {
     @Test
     public void testMultipleCases() {
         // given
-        final BiFunction<Boolean, Boolean, Integer> testSubject = Functions
-                .when(predicate1).then(function1)
-                .when(predicate2).then(function2)
-                .when(predicate3).then(function3)
-                .otherwise(function4);
+        final List<Tuple<BiPredicate<Boolean, Boolean>, BiFunction<Boolean, Boolean, Integer>>> cases = new ArrayList<>();
+        cases.add(SimpleTuple.of(predicate1, function1));
+        cases.add(SimpleTuple.of(predicate2, function2));
+        cases.add(SimpleTuple.of(predicate3, function3));
+        final BiFunction<Boolean, Boolean, Integer> testSubject = new ConditionalBiFunction<>(cases, function4);
 
         // then
         Assert.assertEquals(Integer.valueOf(1), testSubject.apply(true, true));

@@ -6,19 +6,19 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
-public final class ConditionalBiConsumerBuilderStepTwo<T, U> {
+public final class ConditionalBiConsumerBuilderStepTwo<INPUT1, INPUT2> {
 
-    private final List<Tuple<BiPredicate<T, U>, BiConsumer<T, U>>> cases;
+    private final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiConsumer<INPUT1, INPUT2>>> cases;
 
-    ConditionalBiConsumerBuilderStepTwo(@Nonnull final List<Tuple<BiPredicate<T, U>, BiConsumer<T, U>>> cases) {
+    ConditionalBiConsumerBuilderStepTwo(@Nonnull final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiConsumer<INPUT1, INPUT2>>> cases) {
         this.cases = Objects.requireNonNull(cases);
     }
 
-    public ConditionalBiConsumerBuilderStepThree<T, U> consumeWhen(@Nonnull final BiPredicate<T, U> predicate) {
+    public ConditionalBiConsumerBuilderStepThree<INPUT1, INPUT2> consumeWhen(@Nonnull final BiPredicate<INPUT1, INPUT2> predicate) {
         return new ConditionalBiConsumerBuilderStepThree<>(predicate, cases);
     }
 
-    public BiConsumer<T, U> otherwise(@Nonnull final BiConsumer<T, U> otherwise) {
+    public BiConsumer<INPUT1, INPUT2> otherwise(@Nonnull final BiConsumer<INPUT1, INPUT2> otherwise) {
         return new ConditionalBiConsumer<>(cases, Objects.requireNonNull(otherwise));
     }
 }

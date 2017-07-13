@@ -59,6 +59,19 @@ To make them interchangeable, similar way as it happens at [Google](https://gith
 - BiFunction -> BiPredicate
 - BiPredicate -> BiFunction
 
+## Partial application
+
+For BiFunctions and BiConsumers are solving the conversion from two-parameter solutions into single-parameter solutions.
+
+Just like in case of partial application within functional programming, from the client perspective, one of the two parameters of the function (or comsumer) will be bounded and during application only the other one must be provided. The bounding will happen during creation of the instance.
+  
+The partial applications exist in two flavors, left and right. The left will bound the first parameter and the right will bound the second respectively.
+
+|            | Bounding first parameter | Bounding second parameter |
+| ---------- | -----------              | -----------               |
+| BiFunction | LeftAppliedFunction      | RightAppliedFunction      |
+| BiConsumer | LeftAppliedConsumer      | RightAppliedConsumer      |
+
 ## Examples
 
 ### Example 1: Having a bulletproof business function

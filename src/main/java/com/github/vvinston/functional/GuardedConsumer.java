@@ -1,19 +1,20 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-final class GuardedConsumer<T> implements Consumer<T> {
+final class GuardedConsumer<INPUT> implements Consumer<INPUT> {
 
     private final Class<? extends RuntimeException> clazz;
-    private final Consumer<T> success;
-    private final Consumer<T> fallback;
+    private final Consumer<INPUT> success;
+    private final Consumer<INPUT> fallback;
 
     GuardedConsumer(
             @Nonnull final Class<? extends RuntimeException> clazz,
-            @Nonnull final Consumer<T> success,
-            @Nonnull final Consumer<T> fallback) {
+            @Nonnull final Consumer<INPUT> success,
+            @Nonnull final Consumer<INPUT> fallback) {
         this.clazz = Objects.requireNonNull(clazz);
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
@@ -21,7 +22,7 @@ final class GuardedConsumer<T> implements Consumer<T> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public void accept(final T input) {
+    public void accept(@Nullable final INPUT input) {
         try {
             success.accept(input);
         } catch (final RuntimeException exception) {

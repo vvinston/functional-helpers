@@ -6,21 +6,21 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-public final class ConditionalBiFunctionBuilderStepThree<T, U, R> {
+public final class ConditionalBiFunctionBuilderStepThree<INPUT1, INPUT2, RESULT> {
 
-    private final List<Tuple<BiPredicate<T, U>, BiFunction<T, U, R>>> cases;
-    private final BiPredicate<T, U> predicate;
+    private final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiFunction<INPUT1, INPUT2, RESULT>>> cases;
+    private final BiPredicate<INPUT1, INPUT2> predicate;
 
     ConditionalBiFunctionBuilderStepThree(
-            @Nonnull final BiPredicate<T, U> predicate,
-            @Nonnull final List<Tuple<BiPredicate<T, U>, BiFunction<T, U, R>>> cases) {
+            @Nonnull final BiPredicate<INPUT1, INPUT2> predicate,
+            @Nonnull final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiFunction<INPUT1, INPUT2, RESULT>>> cases) {
         this.predicate = Objects.requireNonNull(predicate);
         this.cases = Objects.requireNonNull(cases);
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")
-    public ConditionalBiFunctionBuilderStepTwo<T, U, R> then(@Nonnull final BiFunction<T, U, R> success) {
-        cases.add(Tuple.of(predicate, Objects.requireNonNull(success)));
+    public ConditionalBiFunctionBuilderStepTwo<INPUT1, INPUT2, RESULT> then(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> success) {
+        cases.add(SimpleTuple.of(predicate, Objects.requireNonNull(success)));
         return new ConditionalBiFunctionBuilderStepTwo<>(cases);
     }
 }

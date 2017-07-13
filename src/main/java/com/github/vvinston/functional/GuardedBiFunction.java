@@ -1,19 +1,20 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-final class GuardedBiFunction<T, U, R> implements BiFunction<T, U, R> {
+final class GuardedBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
 
     private final Class<? extends RuntimeException> clazz;
-    private final BiFunction<T, U, R> success;
-    private final BiFunction<T, U, R> fallback;
+    private final BiFunction<INPUT1, INPUT2, RESULT> success;
+    private final BiFunction<INPUT1, INPUT2, RESULT> fallback;
 
     GuardedBiFunction(
             @Nonnull final Class<? extends RuntimeException> clazz,
-            @Nonnull final BiFunction<T, U, R> success,
-            @Nonnull final BiFunction<T, U, R> fallback) {
+            @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> success,
+            @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> fallback) {
         this.clazz = Objects.requireNonNull(clazz);
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
@@ -21,7 +22,7 @@ final class GuardedBiFunction<T, U, R> implements BiFunction<T, U, R> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public R apply(final T input1, final U input2) {
+    public RESULT apply(@Nullable final INPUT1 input1, @Nullable final INPUT2 input2) {
         try {
             return success.apply(input1, input2);
 

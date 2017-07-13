@@ -1,11 +1,11 @@
 package com.github.vvinston.functional;
 
 @SuppressWarnings("WeakerAccess")
-public interface Cache<K, V> {
+public interface Cache<KEY, VALUE> {
 
-    boolean exists(K key);
+    boolean exists(KEY key);
 
-    V get(K key);
+    VALUE get(KEY key);
 
-    void put(K key, V value);
+    void put(KEY key, VALUE value);
 }

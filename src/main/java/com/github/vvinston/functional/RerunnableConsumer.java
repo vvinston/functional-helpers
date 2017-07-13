@@ -1,17 +1,18 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-final class RerunnableConsumer<T> implements Consumer<T> {
+final class RerunnableConsumer<INPUT> implements Consumer<INPUT> {
 
-    private final Consumer<T> consumer;
+    private final Consumer<INPUT> consumer;
     private final int numberOfPossibleAttempts;
 
-    RerunnableConsumer(@Nonnull final Consumer<T> consumer, final int numberOfPossibleAttempts) {
+    RerunnableConsumer(@Nonnull final Consumer<INPUT> consumer, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -22,7 +23,7 @@ final class RerunnableConsumer<T> implements Consumer<T> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public void accept(final T input) {
+    public void accept(@Nullable final INPUT input) {
         final List<RuntimeException> exceptions = new ArrayList<>();
         int numberOfAttempts = 0;
 

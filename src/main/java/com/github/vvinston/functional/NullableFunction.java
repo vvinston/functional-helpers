@@ -1,23 +1,24 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-final class NullableFunction<T, R> implements Function<T, R> {
+final class NullableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
 
-    private final Function<T, Optional<R>> success;
-    private final Function<T, R> fallback;
+    private final Function<INPUT, Optional<RESULT>> success;
+    private final Function<INPUT, RESULT> fallback;
 
-    NullableFunction(@Nonnull final Function<T, Optional<R>> success, @Nonnull final Function<T, R> fallback) {
+    NullableFunction(@Nonnull final Function<INPUT, Optional<RESULT>> success, @Nonnull final Function<INPUT, RESULT> fallback) {
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
     }
 
     @Override
-    public R apply(final T input) {
-        final Optional<R> result = success.apply(input);
+    public RESULT apply(@Nullable final INPUT input) {
+        final Optional<RESULT> result = success.apply(input);
         return result.isPresent() ? result.get() : fallback.apply(input);
     }
 }

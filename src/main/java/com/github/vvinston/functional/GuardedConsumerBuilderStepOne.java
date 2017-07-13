@@ -4,15 +4,15 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class GuardedConsumerBuilderStepOne<T> {
+public final class GuardedConsumerBuilderStepOne<INPUT> {
 
-    private final Consumer<T> success;
+    private final Consumer<INPUT> success;
 
-    GuardedConsumerBuilderStepOne(@Nonnull final Consumer<T> success) {
+    GuardedConsumerBuilderStepOne(@Nonnull final Consumer<INPUT> success) {
         this.success = Objects.requireNonNull(success);
     }
 
-    public GuardedConsumerBuilderStepTwo<T> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
+    public GuardedConsumerBuilderStepTwo<INPUT> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
         return new GuardedConsumerBuilderStepTwo<>(clazz, Objects.requireNonNull(success));
     }
 }

@@ -4,17 +4,17 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 
-public final class GuardedFunctionBuilderStepTwo<T, R> {
+public final class GuardedFunctionBuilderStepTwo<INPUT, RESULT> {
 
-    private final Function<T, R> success;
+    private final Function<INPUT, RESULT> success;
     private final Class<? extends RuntimeException> clazz;
 
-    GuardedFunctionBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final Function<T, R> success) {
+    GuardedFunctionBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final Function<INPUT, RESULT> success) {
         this.clazz = Objects.requireNonNull(clazz);
         this.success = Objects.requireNonNull(success);
     }
 
-    public Function<T, R> fallbackTo(@Nonnull final Function<T, R> fallback) {
+    public Function<INPUT, RESULT> fallbackTo(@Nonnull final Function<INPUT, RESULT> fallback) {
         return new GuardedFunction<>(clazz, success, Objects.requireNonNull(fallback));
     }
 }

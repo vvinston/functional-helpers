@@ -3,21 +3,21 @@ package com.github.vvinston.functional;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
-public interface Either<L, R> {
+public interface Either<LEFT, RIGHT> {
 
     boolean isLeft();
 
     boolean isRight();
 
-    Optional<L> getLeft();
+    Optional<LEFT> getLeft();
 
-    Optional<R> getRight();
+    Optional<RIGHT> getRight();
 
-    static <L, R> Either<L, R> left(@Nonnull final L payload) {
+    static <LEFT, RIGHT> Either<LEFT, RIGHT> left(@Nonnull final LEFT payload) {
         return new Left<>(payload);
     }
 
-    static <L, R> Either<L, R> right(@Nonnull final R payload) {
+    static <LEFT, RIGHT> Either<LEFT, RIGHT> right(@Nonnull final RIGHT payload) {
         return new Right<>(payload);
     }
 }

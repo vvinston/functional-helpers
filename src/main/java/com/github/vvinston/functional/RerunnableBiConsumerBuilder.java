@@ -4,14 +4,14 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-public final class RerunnableBiConsumerBuilder<T, U> {
-    private final BiConsumer<T, U> consumer;
+public final class RerunnableBiConsumerBuilder<INPUT1, INPUT2> {
+    private final BiConsumer<INPUT1, INPUT2> consumer;
 
-    RerunnableBiConsumerBuilder(@Nonnull final BiConsumer<T, U> consumer) {
+    RerunnableBiConsumerBuilder(@Nonnull final BiConsumer<INPUT1, INPUT2> consumer) {
         this.consumer = Objects.requireNonNull(consumer);
     }
 
-    public BiConsumer<T, U> times(final int numberOfPossibleAttempts) {
+    public BiConsumer<INPUT1, INPUT2> times(final int numberOfPossibleAttempts) {
         return new RerunnableBiConsumer<>(consumer, numberOfPossibleAttempts);
     }
 }

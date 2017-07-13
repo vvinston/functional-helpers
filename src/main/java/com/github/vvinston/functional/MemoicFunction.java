@@ -1,22 +1,23 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-final class MemoicFunction<T, R> implements Function<T, R> {
+final class MemoicFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
 
-    private final Map<T, R> map;
-    private final Function<T, R> function;
+    private final Map<INPUT, RESULT> map;
+    private final Function<INPUT, RESULT> function;
 
-    MemoicFunction(@Nonnull final Map<T, R> map, @Nonnull final Function<T, R> function) {
+    MemoicFunction(@Nonnull final Map<INPUT, RESULT> map, @Nonnull final Function<INPUT, RESULT> function) {
         this.map = Objects.requireNonNull(map);
         this.function = Objects.requireNonNull(function);
     }
 
     @Override
-    public R apply(final T t) {
-        return map.computeIfAbsent(t, function);
+    public RESULT apply(@Nullable final INPUT input) {
+        return map.computeIfAbsent(input, function);
     }
 }

@@ -1,17 +1,18 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-final class RerunnableFunction<T, R> implements Function<T, R> {
+final class RerunnableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
 
-    private final Function<T, R> function;
+    private final Function<INPUT, RESULT> function;
     private final int numberOfPossibleAttempts;
 
-    RerunnableFunction(@Nonnull final Function<T, R> function, final int numberOfPossibleAttempts) {
+    RerunnableFunction(@Nonnull final Function<INPUT, RESULT> function, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }
@@ -22,7 +23,7 @@ final class RerunnableFunction<T, R> implements Function<T, R> {
 
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "checkstyle:illegalcatch"})
     @Override
-    public R apply(final T input) {
+    public RESULT apply(@Nullable final INPUT input) {
         final List<RuntimeException> exceptions = new ArrayList<>();
         int numberOfAttempts = 0;
 

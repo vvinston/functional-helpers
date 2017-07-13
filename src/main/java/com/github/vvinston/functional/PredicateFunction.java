@@ -1,19 +1,21 @@
 package com.github.vvinston.functional;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class PredicateFunction<T> implements Function<T, Boolean> {
+final class PredicateFunction<INPUT> implements Function<INPUT, Boolean> {
 
-    private final Predicate<T> predicate;
+    private final Predicate<INPUT> predicate;
 
-    PredicateFunction(final Predicate<T> predicate) {
+    PredicateFunction(@Nonnull final Predicate<INPUT> predicate) {
         this.predicate = Objects.requireNonNull(predicate);
     }
 
     @Override
-    public Boolean apply(final T input) {
+    public Boolean apply(@Nullable final INPUT input) {
         return predicate.test(input);
     }
 }

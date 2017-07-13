@@ -5,19 +5,19 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-final class NullableSupplier<T> implements Supplier<T> {
+final class NullableSupplier<RESULT> implements Supplier<RESULT> {
 
-    private final Supplier<Optional<T>> success;
-    private final Supplier<T> fallback;
+    private final Supplier<Optional<RESULT>> success;
+    private final Supplier<RESULT> fallback;
 
-    NullableSupplier(@Nonnull final Supplier<Optional<T>> success, @Nonnull final Supplier<T> fallback) {
+    NullableSupplier(@Nonnull final Supplier<Optional<RESULT>> success, @Nonnull final Supplier<RESULT> fallback) {
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
     }
 
     @Override
-    public T get() {
-        final Optional<T> result = success.get();
+    public RESULT get() {
+        final Optional<RESULT> result = success.get();
         return result.orElseGet(fallback);
     }
 }

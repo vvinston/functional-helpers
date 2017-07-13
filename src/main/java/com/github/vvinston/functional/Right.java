@@ -5,13 +5,13 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-final class Right<L, R> implements Either<L, R>, Serializable {
+final class Right<LEFT, RIGHT> implements Either<LEFT, RIGHT>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final R payload;
+    private final RIGHT payload;
 
-    Right(@Nonnull final R payload) {
+    Right(@Nonnull final RIGHT payload) {
         this.payload = Objects.requireNonNull(payload);
     }
 
@@ -26,16 +26,16 @@ final class Right<L, R> implements Either<L, R>, Serializable {
     }
 
     @Override
-    public Optional<L> getLeft() {
+    public Optional<LEFT> getLeft() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<R> getRight() {
+    public Optional<RIGHT> getRight() {
         return Optional.of(payload);
     }
 
-    public R getPayload() {
+    public RIGHT getPayload() {
         return payload;
     }
 

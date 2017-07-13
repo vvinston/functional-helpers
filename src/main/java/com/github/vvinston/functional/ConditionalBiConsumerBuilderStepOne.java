@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
-public final class ConditionalBiConsumerBuilderStepOne<T, U> {
+public final class ConditionalBiConsumerBuilderStepOne<INPUT1, INPUT2> {
 
-    private final BiPredicate<T, U> predicate;
+    private final BiPredicate<INPUT1, INPUT2> predicate;
 
-    ConditionalBiConsumerBuilderStepOne(@Nonnull final BiPredicate<T, U> predicate) {
+    ConditionalBiConsumerBuilderStepOne(@Nonnull final BiPredicate<INPUT1, INPUT2> predicate) {
         this.predicate = Objects.requireNonNull(predicate);
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")
-    public ConditionalBiConsumerBuilderStepTwo<T, U> then(@Nonnull final BiConsumer<T, U> success) {
-        final List<Tuple<BiPredicate<T, U>, BiConsumer<T, U>>> cases = new LinkedList<>();
-        cases.add(Tuple.of(predicate, success));
+    public ConditionalBiConsumerBuilderStepTwo<INPUT1, INPUT2> then(@Nonnull final BiConsumer<INPUT1, INPUT2> success) {
+        final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiConsumer<INPUT1, INPUT2>>> cases = new LinkedList<>();
+        cases.add(SimpleTuple.of(predicate, success));
         return new ConditionalBiConsumerBuilderStepTwo<>(cases);
     }
 }

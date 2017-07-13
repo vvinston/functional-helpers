@@ -4,14 +4,14 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-public final class GuardedBiFunctionBuilderStepOne<T, U, R> {
-    private final BiFunction<T, U, R> success;
+public final class GuardedBiFunctionBuilderStepOne<INPUT1, INPUT2, RESULT> {
+    private final BiFunction<INPUT1, INPUT2, RESULT> success;
 
-    GuardedBiFunctionBuilderStepOne(@Nonnull final BiFunction<T, U, R> success) {
+    GuardedBiFunctionBuilderStepOne(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> success) {
         this.success = Objects.requireNonNull(success);
     }
 
-    public GuardedBiFunctionBuilderStepTwo<T, U, R> inCase(@Nonnull final Class<? extends RuntimeException> clazz) {
+    public GuardedBiFunctionBuilderStepTwo<INPUT1, INPUT2, RESULT> inCase(@Nonnull final Class<? extends RuntimeException> clazz) {
         return new GuardedBiFunctionBuilderStepTwo<>(success, clazz);
     }
 }

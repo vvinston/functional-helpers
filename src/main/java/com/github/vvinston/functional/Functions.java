@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+@Deprecated
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.ExcessivePublicCount"})
 public final class Functions {
 

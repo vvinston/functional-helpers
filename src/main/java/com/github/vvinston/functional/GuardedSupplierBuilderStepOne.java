@@ -4,15 +4,15 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public final class GuardedSupplierBuilderStepOne<T> {
+public final class GuardedSupplierBuilderStepOne<RESULT> {
 
-    private final Supplier<T> success;
+    private final Supplier<RESULT> success;
 
-    GuardedSupplierBuilderStepOne(@Nonnull final Supplier<T> success) {
+    GuardedSupplierBuilderStepOne(@Nonnull final Supplier<RESULT> success) {
         this.success = Objects.requireNonNull(success);
     }
 
-    public GuardedSupplierBuilderStepTwo<T> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
+    public GuardedSupplierBuilderStepTwo<RESULT> inCaseOf(@Nonnull final Class<? extends RuntimeException> clazz) {
         return new GuardedSupplierBuilderStepTwo<>(clazz, Objects.requireNonNull(success));
     }
 }

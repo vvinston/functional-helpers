@@ -21,7 +21,7 @@ public class GuardedFunctionTest {
     public void testSuccess() {
         // given
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.doTry(success1).inCaseOf(clazz).fallbackTo(fallback);
+        final Function<Boolean, String> testSubject = new GuardedFunction<>(clazz, success1, fallback);
 
         // when
         final String result = testSubject.apply(true);
@@ -34,7 +34,7 @@ public class GuardedFunctionTest {
     public void testFallback() {
         // given
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.doTry(success2).inCaseOf(clazz).fallbackTo(fallback);
+        final Function<Boolean, String> testSubject = new GuardedFunction<>(clazz, success2, fallback);
 
         // when
         final String result = testSubject.apply(true);
@@ -47,7 +47,7 @@ public class GuardedFunctionTest {
     public void testFallbackWithUnexpectedException() {
         // given
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.doTry(success3).inCaseOf(clazz).fallbackTo(fallback);
+        final Function<Boolean, String> testSubject = new GuardedFunction<>(clazz, success3, fallback);
 
         // when
         testSubject.apply(true);

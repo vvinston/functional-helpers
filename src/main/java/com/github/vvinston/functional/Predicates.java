@@ -6,6 +6,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+@Deprecated
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.ExcessivePublicCount", "WeakerAccess"})
 public final class Predicates {
 

@@ -4,17 +4,17 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-public final class GuardedBiConsumerBuilderStepTwo<T, U> {
+public final class GuardedBiConsumerBuilderStepTwo<INPUT1, INPUT2> {
 
-    private final BiConsumer<T, U> success;
+    private final BiConsumer<INPUT1, INPUT2> success;
     private final Class<? extends RuntimeException> clazz;
 
-    GuardedBiConsumerBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final BiConsumer<T, U> success) {
+    GuardedBiConsumerBuilderStepTwo(@Nonnull final Class<? extends RuntimeException> clazz, @Nonnull final BiConsumer<INPUT1, INPUT2> success) {
         this.clazz = Objects.requireNonNull(clazz);
         this.success = Objects.requireNonNull(success);
     }
 
-    public BiConsumer<T, U> fallbackTo(@Nonnull final BiConsumer<T, U> fallback) {
+    public BiConsumer<INPUT1, INPUT2> fallbackTo(@Nonnull final BiConsumer<INPUT1, INPUT2> fallback) {
         return new GuardedBiConsumer<>(clazz, success, Objects.requireNonNull(fallback));
     }
 }

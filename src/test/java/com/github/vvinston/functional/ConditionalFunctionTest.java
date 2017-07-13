@@ -3,6 +3,8 @@ package com.github.vvinston.functional;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -26,10 +28,9 @@ public class ConditionalFunctionTest {
     @Test
     public void testHappyPath() {
         // given
-        final Function<Boolean, String> testSubject = Functions
-                .when(predicate)
-                .then(success)
-                .otherwise(fail);
+        final List<Tuple<Predicate<Boolean>, Function<Boolean, String>>> cases = new ArrayList<>();
+        cases.add(SimpleTuple.of(predicate, success));
+        final Function<Boolean, String> testSubject = new ConditionalFunction<>(cases, fail);
 
         // then
         Assert.assertEquals(SUCCESS, testSubject.apply(true));
@@ -39,11 +40,11 @@ public class ConditionalFunctionTest {
     @Test
     public void testMultipleCases() {
         // given
-        final Function<String, Integer> testSubject = Functions
-                .when(predicate1).then(function1)
-                .when(predicate2).then(function2)
-                .when(predicate3).then(function3)
-                .otherwise(function4);
+        final List<Tuple<Predicate<String>, Function<String, Integer>>> cases = new ArrayList<>();
+        cases.add(SimpleTuple.of(predicate1, function1));
+        cases.add(SimpleTuple.of(predicate2, function2));
+        cases.add(SimpleTuple.of(predicate3, function3));
+        final Function<String, Integer> testSubject = new ConditionalFunction<>(cases, function4);
 
         // then
         Assert.assertEquals(Integer.valueOf(1), testSubject.apply("a"));

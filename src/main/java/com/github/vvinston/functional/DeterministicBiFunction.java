@@ -1,22 +1,23 @@
 package com.github.vvinston.functional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-final class DeterministicBiFunction<T, U, R> implements BiFunction<T, U, R> {
+final class DeterministicBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
 
-    private final Cache<Tuple<T, U>, R> cache;
-    private final BiFunction<T, U, R> function;
+    private final Cache<Tuple<INPUT1, INPUT2>, RESULT> cache;
+    private final BiFunction<INPUT1, INPUT2, RESULT> function;
 
-    DeterministicBiFunction(@Nonnull final Cache<Tuple<T, U>, R> cache, @Nonnull final BiFunction<T, U, R> function) {
+    DeterministicBiFunction(@Nonnull final Cache<Tuple<INPUT1, INPUT2>, RESULT> cache, @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> function) {
         this.cache = Objects.requireNonNull(cache);
         this.function = Objects.requireNonNull(function);
     }
 
     @Override
-    public R apply(final T input1, final U input2) {
-        final Tuple<T, U> key = Tuple.of(input1, input2);
+    public RESULT apply(@Nullable final INPUT1 input1, @Nullable final INPUT2 input2) {
+        final Tuple<INPUT1, INPUT2> key = SimpleTuple.of(input1, input2);
 
         if (!cache.exists(key)) {
             cache.put(key, function.apply(input1, input2));

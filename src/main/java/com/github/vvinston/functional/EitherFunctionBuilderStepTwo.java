@@ -5,17 +5,17 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public final class EitherFunctionBuilderStepTwo<T, R1> {
+public final class EitherFunctionBuilderStepTwo<INPUT, RESULT1> {
 
-    private final Predicate<T> predicate;
-    private final Function<T, R1> leftFunction;
+    private final Predicate<INPUT> predicate;
+    private final Function<INPUT, RESULT1> leftFunction;
 
-    EitherFunctionBuilderStepTwo(@Nonnull final Predicate<T> predicate, @Nonnull final Function<T, R1> leftFunction) {
+    EitherFunctionBuilderStepTwo(@Nonnull final Predicate<INPUT> predicate, @Nonnull final Function<INPUT, RESULT1> leftFunction) {
         this.predicate = Objects.requireNonNull(predicate);
         this.leftFunction = Objects.requireNonNull(leftFunction);
     }
 
-    public <R2> Function<T, Either<R1, R2>> otherwise(@Nonnull final Function<T, R2> rightFunction) {
+    public <RESULT2> Function<INPUT, Either<RESULT1, RESULT2>> otherwise(@Nonnull final Function<INPUT, RESULT2> rightFunction) {
         return new EitherFunction<>(predicate, leftFunction, Objects.requireNonNull(rightFunction));
     }
 }
