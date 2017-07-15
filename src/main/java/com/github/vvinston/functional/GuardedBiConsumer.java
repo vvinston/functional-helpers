@@ -5,13 +5,12 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-final class GuardedBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
-
+public final class GuardedBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
     private final Class<? extends RuntimeException> clazz;
     private final BiConsumer<INPUT1, INPUT2> success;
     private final BiConsumer<INPUT1, INPUT2> fallback;
 
-    GuardedBiConsumer(
+    public GuardedBiConsumer(
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final BiConsumer<INPUT1, INPUT2> success,
             @Nonnull final BiConsumer<INPUT1, INPUT2> fallback) {

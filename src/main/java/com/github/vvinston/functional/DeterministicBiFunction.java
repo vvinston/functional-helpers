@@ -5,12 +5,11 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-final class DeterministicBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
-
+public final class DeterministicBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
     private final Cache<Tuple<INPUT1, INPUT2>, RESULT> cache;
     private final BiFunction<INPUT1, INPUT2, RESULT> function;
 
-    DeterministicBiFunction(@Nonnull final Cache<Tuple<INPUT1, INPUT2>, RESULT> cache, @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> function) {
+    public DeterministicBiFunction(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> function, @Nonnull final Cache<Tuple<INPUT1, INPUT2>, RESULT> cache) {
         this.cache = Objects.requireNonNull(cache);
         this.function = Objects.requireNonNull(function);
     }

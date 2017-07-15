@@ -3,7 +3,6 @@ package com.github.vvinston.functional;
 import java.util.Objects;
 
 public final class SimpleTuple<FIRST, SECOND> implements Tuple<FIRST, SECOND> {
-
     private final FIRST first;
 
     private final SECOND second;

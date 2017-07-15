@@ -33,14 +33,14 @@ public class CachedFunctionsPerformanceTest {
     public static Collection<Object[]> data() {
         //noinspection unchecked
         return Arrays.asList(new Object[][] {
-                { "Deterministic::HashMap", Functions.deterministic(TEST_FUNCTION) },
-                { "Deterministic::ConcurrentHashMap", new DeterministicFunction<>(new MapCache<>(new ConcurrentHashMap<>()), TEST_FUNCTION) },
-                { "Deterministic::IdentityHashMap", new DeterministicFunction<>(new MapCache<>(new IdentityHashMap<>()), TEST_FUNCTION) },
-                { "Deterministic::LinkedHashMap", new DeterministicFunction<>(new MapCache<>(new LinkedHashMap<>()), TEST_FUNCTION) },
-                { "MemoicFunction::HashMap", Functions.memoic(TEST_FUNCTION) },
-                { "MemoicFunction::ConcurrentHashMap", new MemoicFunction<>(new ConcurrentHashMap<>(), TEST_FUNCTION) },
-                { "MemoicFunction::IdentityHashMap", new MemoicFunction<>(new IdentityHashMap<>(), TEST_FUNCTION) },
-                { "MemoicFunction::LinkedHashMap", new MemoicFunction<>(new LinkedHashMap<>(), TEST_FUNCTION) },
+                { "Deterministic::HashMap", new DeterministicFunctionBuilder().deterministic(TEST_FUNCTION) },
+                { "Deterministic::ConcurrentHashMap", new DeterministicFunction<>(TEST_FUNCTION, new MapCache<>(new ConcurrentHashMap<>())) },
+                { "Deterministic::IdentityHashMap", new DeterministicFunction<>(TEST_FUNCTION, new MapCache<>(new IdentityHashMap<>())) },
+                { "Deterministic::LinkedHashMap", new DeterministicFunction<>(TEST_FUNCTION, new MapCache<>(new LinkedHashMap<>())) },
+                { "MemoicFunction::HashMap", new MemoicFunctionBuilder().memoic(TEST_FUNCTION) },
+                { "MemoicFunction::ConcurrentHashMap", new MemoicFunction<>(TEST_FUNCTION, new ConcurrentHashMap<>()) },
+                { "MemoicFunction::IdentityHashMap", new MemoicFunction<>(TEST_FUNCTION, new IdentityHashMap<>()) },
+                { "MemoicFunction::LinkedHashMap", new MemoicFunction<>(TEST_FUNCTION, new LinkedHashMap<>()) },
         });
     }
 

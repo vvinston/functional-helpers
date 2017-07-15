@@ -5,13 +5,12 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-final class GuardedConsumer<INPUT> implements Consumer<INPUT> {
-
+public final class GuardedConsumer<INPUT> implements Consumer<INPUT> {
     private final Class<? extends RuntimeException> clazz;
     private final Consumer<INPUT> success;
     private final Consumer<INPUT> fallback;
 
-    GuardedConsumer(
+    public GuardedConsumer(
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final Consumer<INPUT> success,
             @Nonnull final Consumer<INPUT> fallback) {

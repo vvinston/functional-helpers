@@ -5,12 +5,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-final class NullableSupplier<RESULT> implements Supplier<RESULT> {
-
+public final class NullableSupplier<RESULT> implements Supplier<RESULT> {
     private final Supplier<Optional<RESULT>> success;
     private final Supplier<RESULT> fallback;
 
-    NullableSupplier(@Nonnull final Supplier<Optional<RESULT>> success, @Nonnull final Supplier<RESULT> fallback) {
+    public NullableSupplier(@Nonnull final Supplier<Optional<RESULT>> success, @Nonnull final Supplier<RESULT> fallback) {
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
     }

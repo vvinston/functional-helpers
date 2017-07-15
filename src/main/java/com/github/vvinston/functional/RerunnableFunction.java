@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-final class RerunnableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
-
+public final class RerunnableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
     private final Function<INPUT, RESULT> function;
     private final int numberOfPossibleAttempts;
 
-    RerunnableFunction(@Nonnull final Function<INPUT, RESULT> function, final int numberOfPossibleAttempts) {
+    public RerunnableFunction(@Nonnull final Function<INPUT, RESULT> function, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }

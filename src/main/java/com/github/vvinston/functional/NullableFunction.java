@@ -6,12 +6,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-final class NullableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
+public final class NullableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
 
     private final Function<INPUT, Optional<RESULT>> success;
     private final Function<INPUT, RESULT> fallback;
 
-    NullableFunction(@Nonnull final Function<INPUT, Optional<RESULT>> success, @Nonnull final Function<INPUT, RESULT> fallback) {
+    public NullableFunction(@Nonnull final Function<INPUT, Optional<RESULT>> success, @Nonnull final Function<INPUT, RESULT> fallback) {
         this.success = Objects.requireNonNull(success);
         this.fallback = Objects.requireNonNull(fallback);
     }
@@ -21,4 +21,5 @@ final class NullableFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
         final Optional<RESULT> result = success.apply(input);
         return result.isPresent() ? result.get() : fallback.apply(input);
     }
+
 }

@@ -7,7 +7,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class LeftAppliedConsumer<INPUT1, INPUT2> implements Consumer<INPUT2> {
-
     private final BiConsumer<INPUT1, INPUT2> biConsumer;
     private final INPUT1 boundParameter;
 

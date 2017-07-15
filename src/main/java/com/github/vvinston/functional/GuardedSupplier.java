@@ -4,13 +4,12 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-final class GuardedSupplier<RESULT> implements Supplier<RESULT> {
-
+public final class GuardedSupplier<RESULT> implements Supplier<RESULT> {
     private final Class<? extends RuntimeException> clazz;
     private final Supplier<RESULT> success;
     private final Supplier<RESULT> fallback;
 
-    GuardedSupplier(
+    public GuardedSupplier(
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final Supplier<RESULT> success,
             @Nonnull final Supplier<RESULT> fallback) {

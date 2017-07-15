@@ -8,12 +8,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-final class ConditionalConsumer<INPUT> implements Consumer<INPUT> {
-
+public final class ConditionalConsumer<INPUT> implements Consumer<INPUT> {
     private final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases = new LinkedList<>();
     private final Consumer<INPUT> otherwise;
 
-    ConditionalConsumer(
+    public ConditionalConsumer(
             @Nonnull final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases,
             @Nonnull final Consumer<INPUT> otherwise) {
         this.cases.addAll(Objects.requireNonNull(cases));

@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-final class RerunnableBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
-
+public final class RerunnableBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
     private final BiFunction<INPUT1, INPUT2, RESULT> function;
     private final int numberOfPossibleAttempts;
 
-    RerunnableBiFunction(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> function, final int numberOfPossibleAttempts) {
+    public RerunnableBiFunction(@Nonnull final BiFunction<INPUT1, INPUT2, RESULT> function, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }

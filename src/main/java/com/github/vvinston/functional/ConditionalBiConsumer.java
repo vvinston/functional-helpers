@@ -8,12 +8,11 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
-final class ConditionalBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
-
+public final class ConditionalBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
     private final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiConsumer<INPUT1, INPUT2>>> cases = new LinkedList<>();
     private final BiConsumer<INPUT1, INPUT2> otherwise;
 
-    ConditionalBiConsumer(
+    public ConditionalBiConsumer(
             @Nonnull final List<Tuple<BiPredicate<INPUT1, INPUT2>, BiConsumer<INPUT1, INPUT2>>> cases,
             @Nonnull final BiConsumer<INPUT1, INPUT2> otherwise) {
         this.cases.addAll(Objects.requireNonNull(cases));

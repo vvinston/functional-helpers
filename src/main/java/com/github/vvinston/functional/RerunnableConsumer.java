@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-final class RerunnableConsumer<INPUT> implements Consumer<INPUT> {
-
+public final class RerunnableConsumer<INPUT> implements Consumer<INPUT> {
     private final Consumer<INPUT> consumer;
     private final int numberOfPossibleAttempts;
 
-    RerunnableConsumer(@Nonnull final Consumer<INPUT> consumer, final int numberOfPossibleAttempts) {
+    public RerunnableConsumer(@Nonnull final Consumer<INPUT> consumer, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }

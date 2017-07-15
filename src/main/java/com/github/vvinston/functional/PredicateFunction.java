@@ -6,11 +6,10 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class PredicateFunction<INPUT> implements Function<INPUT, Boolean> {
-
+public final class PredicateFunction<INPUT> implements Function<INPUT, Boolean> {
     private final Predicate<INPUT> predicate;
 
-    PredicateFunction(@Nonnull final Predicate<INPUT> predicate) {
+    public PredicateFunction(@Nonnull final Predicate<INPUT> predicate) {
         this.predicate = Objects.requireNonNull(predicate);
     }
 

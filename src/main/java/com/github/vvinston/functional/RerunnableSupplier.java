@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-final class RerunnableSupplier<RESULT> implements Supplier<RESULT> {
-
+public final class RerunnableSupplier<RESULT> implements Supplier<RESULT> {
     private final Supplier<RESULT> supplier;
     private final int numberOfPossibleAttempts;
 
-    RerunnableSupplier(@Nonnull final Supplier<RESULT> supplier, final int numberOfPossibleAttempts) {
+    public RerunnableSupplier(@Nonnull final Supplier<RESULT> supplier, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }

@@ -24,7 +24,7 @@ public class DeterministicFunctionTest {
     @Test
     public void testFirstCallsDecoratedForEveryInput() {
         // given
-        final Function<Boolean, String> testSubject = new DeterministicFunction<>(cache, success);
+        final Function<Boolean, String> testSubject = new DeterministicFunction<>(success, cache);
         Mockito.when(cache.exists(Mockito.anyBoolean())).thenReturn(false);
 
         // when
@@ -44,7 +44,7 @@ public class DeterministicFunctionTest {
     public void testDecoratedIsNotCalledWhenAlreadyStores() {
         // given
         final int numberOfCalls = 5;
-        final Function<Boolean, String> testSubject = new DeterministicFunction<>(cache, success);
+        final Function<Boolean, String> testSubject = new DeterministicFunction<>(success, cache);
         Mockito.when(cache.exists(Mockito.anyBoolean())).thenReturn(true);
 
         // when
@@ -62,7 +62,7 @@ public class DeterministicFunctionTest {
     public void testFactoryReturnsConsistentValue() throws Exception {
         // given
         final String testInput = "test";
-        final Function<String, Long> testSubject = Functions.deterministic(nonDeterministic);
+        final Function<String, Long> testSubject = new DeterministicFunctionBuilder().deterministic(nonDeterministic);
 
         // when
         final Long result1 = testSubject.apply(testInput);

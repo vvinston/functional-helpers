@@ -1,7 +1,12 @@
 package com.github.vvinston.functional.example;
 
-import com.github.vvinston.functional.Functions;
+import com.github.vvinston.functional.ConditionalFunctionBuilder;
+import com.github.vvinston.functional.DeterministicFunctionBuilder;
+import com.github.vvinston.functional.FunctionPredicate;
+import com.github.vvinston.functional.GuardedFunctionBuilder;
+import com.github.vvinston.functional.NullableFunctionBuilder;
 import com.github.vvinston.functional.RerunnableException;
+import com.github.vvinston.functional.RerunnableFunctionBuilder;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -15,8 +20,8 @@ public class Example {
         final Function<String, String> businessFunction = i -> i;
         final Function<String, String> fallbackFunction = i -> i;
         @SuppressWarnings("unchecked")
-        final Function<String, String> composed = Functions
-                .doTry(Functions.attempt(businessFunction).times(numberOfRetries))
+        final Function<String, String> composed = new GuardedFunctionBuilder()
+                .doTry(new RerunnableFunctionBuilder().attempt(businessFunction).times(numberOfRetries))
                 .inCaseOf(RerunnableException.class)
                 .fallbackTo(fallbackFunction);
 
@@ -32,13 +37,13 @@ public class Example {
         final Function<Result, Optional<Integer>> extract = i -> Optional.of(1);
         final Function<Query, Result> fallback = i -> new Result();
 
-        final Function<String, Query> generateQuery = Functions.deterministic(tokenize.andThen(createQuery));
+        final Function<String, Query> generateQuery = new DeterministicFunctionBuilder().deterministic(tokenize.andThen(createQuery));
         @SuppressWarnings("unchecked")
-        final Function<Query, Result> guardedExecute = Functions
-                .doTry(Functions.attempt(execute).times(numberOfRetries))
+        final Function<Query, Result> guardedExecute = new GuardedFunctionBuilder()
+                .doTry(new RerunnableFunctionBuilder().attempt(execute).times(numberOfRetries))
                 .inCaseOf(RerunnableException.class)
                 .fallbackTo(fallback);
-        final Function<Result, Integer> guardedExtract = Functions.nullableWithFallbackValue(extract, 0);
+        final Function<Result, Integer> guardedExtract = new NullableFunctionBuilder().nullableWithFallbackValue(extract, 0);
 
         final Function<String, Integer> acquireData = generateQuery.andThen(guardedExecute).andThen(guardedExtract);
     }
@@ -49,8 +54,8 @@ public class Example {
         final Function<String, Integer> function2 = i -> 1;
         final Function<String, Integer> function3 = i -> 2;
 
-        final Function<String, Integer> composed = Functions
-                .when(Functions.predicateOf(function1))
+        final Function<String, Integer> composed = new ConditionalFunctionBuilder()
+                .when(new FunctionPredicate<>(function1))
                 .then(function2)
                 .otherwise(function3);
     }

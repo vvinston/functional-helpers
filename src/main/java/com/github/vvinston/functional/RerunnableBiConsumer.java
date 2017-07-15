@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-final class RerunnableBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
-
+public final class RerunnableBiConsumer<INPUT1, INPUT2> implements BiConsumer<INPUT1, INPUT2> {
     private final BiConsumer<INPUT1, INPUT2> consumer;
     private final int numberOfPossibleAttempts;
 
-    RerunnableBiConsumer(@Nonnull final BiConsumer<INPUT1, INPUT2> consumer, final int numberOfPossibleAttempts) {
+    public RerunnableBiConsumer(@Nonnull final BiConsumer<INPUT1, INPUT2> consumer, final int numberOfPossibleAttempts) {
         if (numberOfPossibleAttempts < 0) {
             throw new IllegalArgumentException("Number of possible attempts can not be negative!");
         }

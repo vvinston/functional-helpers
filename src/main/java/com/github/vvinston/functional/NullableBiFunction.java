@@ -6,12 +6,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-final class NullableBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
+public final class NullableBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
 
     private final BiFunction<INPUT1, INPUT2, Optional<RESULT>> success;
     private final BiFunction<INPUT1, INPUT2, RESULT> fallback;
 
-    NullableBiFunction(
+    public NullableBiFunction(
             @Nonnull final BiFunction<INPUT1, INPUT2, Optional<RESULT>> success,
             @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> fallback) {
         this.success = Objects.requireNonNull(success);

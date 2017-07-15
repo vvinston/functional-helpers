@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public final class ConditionalConsumerBuilderStepThree<INPUT> {
-
     private final Predicate<INPUT> predicate;
     private final List<Tuple<Predicate<INPUT>, Consumer<INPUT>>> cases;
 

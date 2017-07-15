@@ -7,7 +7,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class LeftAppliedFunction<INPUT1, INPUT2, RESULT> implements Function<INPUT2, RESULT> {
-
     private final BiFunction<INPUT1, INPUT2, RESULT> biFunction;
     private final INPUT1 boundParameter;
 

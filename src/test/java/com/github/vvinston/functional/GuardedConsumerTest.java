@@ -25,7 +25,7 @@ public class GuardedConsumerTest {
     public void testSuccess() {
         // given
         @SuppressWarnings("unchecked")
-        final Consumer<String> testSubject = Functions.doTry(success).inCaseOf(clazz).fallbackTo(fallback);
+        final Consumer<String> testSubject = new GuardedConsumerBuilder().doTry(success).inCaseOf(clazz).fallbackTo(fallback);
 
         // when
         testSubject.accept(INPUT);

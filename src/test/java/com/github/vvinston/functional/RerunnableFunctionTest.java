@@ -27,7 +27,7 @@ public class RerunnableFunctionTest {
     public void testSuccessfulRunningWillReturnWithResult() {
         // given
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.attempt(function).times(1);
+        final Function<Boolean, String> testSubject = new RerunnableFunctionBuilder().attempt(function).times(1);
         Mockito.when(function.apply(Mockito.anyBoolean())).thenReturn(SUCCESS);
 
         // then
@@ -38,7 +38,7 @@ public class RerunnableFunctionTest {
     public void testAfterSuccessfulAttemptWillReturnWithResult() {
         // given
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.attempt(function).times(2);
+        final Function<Boolean, String> testSubject = new RerunnableFunctionBuilder().attempt(function).times(2);
         Mockito.when(function.apply(Mockito.anyBoolean())).thenThrow(new IllegalArgumentException()).thenReturn(SUCCESS);
 
         // then
@@ -50,7 +50,7 @@ public class RerunnableFunctionTest {
     public void testZeroTimesWillNotCallDecorated() {
         // given
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.attempt(function).times(0);
+        final Function<Boolean, String> testSubject = new RerunnableFunctionBuilder().attempt(function).times(0);
 
         // when
         try {
@@ -70,7 +70,7 @@ public class RerunnableFunctionTest {
         // given
         final int numberOfAttempts = 5;
         @SuppressWarnings("unchecked")
-        final Function<Boolean, String> testSubject = Functions.attempt(function).times(numberOfAttempts);
+        final Function<Boolean, String> testSubject = new RerunnableFunctionBuilder().attempt(function).times(numberOfAttempts);
         Mockito.when(function.apply(Mockito.anyBoolean())).thenThrow(new IllegalArgumentException());
 
         // when

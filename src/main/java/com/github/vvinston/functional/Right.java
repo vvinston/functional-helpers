@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 final class Right<LEFT, RIGHT> implements Either<LEFT, RIGHT>, Serializable {
-
     private static final long serialVersionUID = 1L;
 
     private final RIGHT payload;

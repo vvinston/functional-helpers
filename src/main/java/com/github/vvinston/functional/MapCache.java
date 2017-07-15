@@ -5,8 +5,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 
-class MapCache<KEY, VALUE> implements Cache<KEY, VALUE> {
-
+final class MapCache<KEY, VALUE> implements Cache<KEY, VALUE> {
     private final Map<KEY, VALUE> map;
 
     MapCache(@Nonnull final Map<KEY, VALUE> map) {

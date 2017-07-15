@@ -8,12 +8,11 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class ConditionalFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
-
+public final class ConditionalFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
     private final List<Tuple<Predicate<INPUT>, Function<INPUT, RESULT>>> cases = new LinkedList<>();
     private final Function<INPUT, RESULT> otherwise;
 
-    ConditionalFunction(
+    public ConditionalFunction(
             @Nonnull final List<Tuple<Predicate<INPUT>, Function<INPUT, RESULT>>> cases,
             @Nonnull final Function<INPUT, RESULT> otherwise) {
         this.cases.addAll(Objects.requireNonNull(cases));

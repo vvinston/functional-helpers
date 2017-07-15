@@ -6,13 +6,12 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class EitherFunction<INPUT, RESULT1, RESULT2> implements Function<INPUT, Either<RESULT1, RESULT2>> {
-
+public final class EitherFunction<INPUT, RESULT1, RESULT2> implements Function<INPUT, Either<RESULT1, RESULT2>> {
     private final Predicate<INPUT> predicate;
     private final Function<INPUT, RESULT1> leftFunction;
     private final Function<INPUT, RESULT2> rightFunction;
 
-    EitherFunction(
+    public EitherFunction(
             @Nonnull final Predicate<INPUT> predicate,
             @Nonnull final Function<INPUT, RESULT1> leftFunction,
             @Nonnull final Function<INPUT, RESULT2> rightFunction) {

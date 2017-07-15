@@ -6,11 +6,10 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-final class FunctionBiPredicate<INPUT1, INPUT2> implements BiPredicate<INPUT1, INPUT2> {
-
+public final class FunctionBiPredicate<INPUT1, INPUT2> implements BiPredicate<INPUT1, INPUT2> {
     private final BiFunction<INPUT1, INPUT2, Boolean> function;
 
-    FunctionBiPredicate(@Nonnull final BiFunction<INPUT1, INPUT2, Boolean> function) {
+    public FunctionBiPredicate(@Nonnull final BiFunction<INPUT1, INPUT2, Boolean> function) {
         this.function = Objects.requireNonNull(function);
     }
 

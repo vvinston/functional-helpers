@@ -36,7 +36,7 @@ public class NullableBiFunctionTest {
     @Test
     public void testWhenSuccessIsNullThenReturnWithConstantFallbackValue() {
         // given
-        final BiFunction<Boolean, Boolean, String> testSubject = Functions
+        final BiFunction<Boolean, Boolean, String> testSubject = new NullableBiFunctionBuilder()
                 .nullableWithFallbackValue(success2, FALLBACK);
 
         // then

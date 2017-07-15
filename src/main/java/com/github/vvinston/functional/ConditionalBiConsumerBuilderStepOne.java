@@ -3,16 +3,14 @@ package com.github.vvinston.functional;
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
 public final class ConditionalBiConsumerBuilderStepOne<INPUT1, INPUT2> {
-
     private final BiPredicate<INPUT1, INPUT2> predicate;
 
     ConditionalBiConsumerBuilderStepOne(@Nonnull final BiPredicate<INPUT1, INPUT2> predicate) {
-        this.predicate = Objects.requireNonNull(predicate);
+        this.predicate = predicate;
     }
 
     @SuppressWarnings("PMD.AccessorClassGeneration")

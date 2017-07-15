@@ -5,13 +5,13 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-final class GuardedBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
+public final class GuardedBiFunction<INPUT1, INPUT2, RESULT> implements BiFunction<INPUT1, INPUT2, RESULT> {
 
     private final Class<? extends RuntimeException> clazz;
     private final BiFunction<INPUT1, INPUT2, RESULT> success;
     private final BiFunction<INPUT1, INPUT2, RESULT> fallback;
 
-    GuardedBiFunction(
+    public GuardedBiFunction(
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> success,
             @Nonnull final BiFunction<INPUT1, INPUT2, RESULT> fallback) {

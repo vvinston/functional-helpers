@@ -6,13 +6,12 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-final class EitherBiFunction<INPUT1, INPUT2, RESUL1, RESULT2> implements BiFunction<INPUT1, INPUT2, Either<RESUL1, RESULT2>> {
-
+public final class EitherBiFunction<INPUT1, INPUT2, RESUL1, RESULT2> implements BiFunction<INPUT1, INPUT2, Either<RESUL1, RESULT2>> {
     private final BiPredicate<INPUT1, INPUT2> predicate;
     private final BiFunction<INPUT1, INPUT2, RESUL1> leftFunction;
     private final BiFunction<INPUT1, INPUT2, RESULT2> rightFunction;
 
-    EitherBiFunction(
+    public EitherBiFunction(
             @Nonnull final BiPredicate<INPUT1, INPUT2> predicate,
             @Nonnull final BiFunction<INPUT1, INPUT2, RESUL1> leftFunction,
             @Nonnull final BiFunction<INPUT1, INPUT2, RESULT2> rightFunction) {

@@ -5,13 +5,12 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 
-final class GuardedFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
-
+public final class GuardedFunction<INPUT, RESULT> implements Function<INPUT, RESULT> {
     private final Class<? extends RuntimeException> clazz;
     private final Function<INPUT, RESULT> success;
     private final Function<INPUT, RESULT> fallback;
 
-    GuardedFunction(
+    public GuardedFunction(
             @Nonnull final Class<? extends RuntimeException> clazz,
             @Nonnull final Function<INPUT, RESULT> success,
             @Nonnull final Function<INPUT, RESULT> fallback) {
